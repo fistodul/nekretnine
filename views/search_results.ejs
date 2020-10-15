@@ -1,0 +1,66 @@
+<%- include ('b'); %>
+<%- include ('form'); %>
+</header>
+<main>
+  <% if (ponude.length) { -%>
+    <a id="ponude"></a>
+    <% if (locals.top) { -%>
+      <h1 class="top-ponude top-ponude-result">TOP PONUDE</h1>
+    <% } else { -%>
+      <h1 class="top-ponude top-ponude-result">Rezultati pretrage</h1>
+    <% }
+  } else { -%>
+    <h1 class="top-ponude top-ponude-result">Nema rezultata</h1>
+  <% }
+  for (let i = 0; i < ponude.length; i++) { -%>
+    <div class="oglas oglas-result">
+      <a href="/oglas/<%= ponude[i].id %>">
+        <img class="ponuda-img ponuda-img-result" src="/images/oglasi/<%= ponude[i].slika ? ponude[i].slika : 'error' %>" alt="slika">
+  	</a>
+      <div class="vl"></div>
+      <div class="oglas-result-right">
+        <div class="oglas-result-top">
+          <div class="oglas-result-location">
+            <%- '<a class="noa" href="/oglas/' + ponude[i].id + '">' + ponude[i].u_id + '</a>' %>
+            <% if (ponude[i].lokacija) { -%>
+              | <a href="<%= ponude[i].lokacija %>" class="location-link">Prikaži lokaciju</a>
+            <% } -%>
+          </div>
+          <% if (ponude[i].cena) {
+            const formatter = new Intl.NumberFormat("en-US", {style: "currency", currency: ponude[i].currency}); -%>
+            <a class="noa oglas-result-pricing prices" href="/oglas/<%= ponude[i].id %>">
+              <%= formatter.format(ponude[i].cena) %>
+              <% if (ponude[i].stara_cena) { -%>
+                  <div class="original-price"><%= formatter.format(ponude[i].stara_cena) %></div>
+              <% } -%>
+            </a>
+          <% } -%>
+        </div>
+        <a class="noa" href="/oglas/<%= ponude[i].id %>">
+          <table class="oglas-result-table">
+            <tr>
+              <td>Kvadatura</td>
+              <th><%= ponude[i].kvadrati ? ponude[i].kvadrati + " ㎡" : "" %></th>
+            </tr>
+            <tr>
+              <td>Broj soba</td>
+              <th><%= ponude[i].broj_soba %></th>
+            </tr>
+            <tr>
+              <td>Spratnost</td>
+              <th><%= ponude[i].spratnost %></th>
+            </tr>
+          </table>
+        </a>
+      </div>
+    </div>
+  <% }
+  if (l > 1) { -%>
+    <div class="pages">
+      <% for (let i = 1; i <= l; i++) { -%>
+        <a href="?page=<%= i %>#ponude"><%= i %></a>
+      <% } -%>
+    </div>
+  <% } -%>
+</main>
+<%- include ('b_end'); -%>

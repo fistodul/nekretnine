@@ -1,0 +1,156 @@
+<%- include ('b'); %>
+</header>
+<div class="oglas">
+  <div id="location">
+    <picture>
+      <source srcset="/images/logo.png" media="(max-width: 600px)">
+      <img src="/images/logo-color.png" alt="Logo">
+    </picture>
+    <% for (const ulica of ponuda.u_id) { -%>
+        <div><%= ulica %></div>
+    <% }
+	if (ponuda.cena) {
+	  const formatter = new Intl.NumberFormat("en-US", {style: "currency", currency: ponuda.currency}); -%>
+      <div class="prices">
+        <p><%= formatter.format(ponuda.cena) %></p>
+        <% if (ponuda.stara_cena) { -%>
+          <p class="original-price"><%= formatter.format(ponuda.stara_cena) %></p>
+        <% } -%>
+      </div>
+	<% } -%>
+  </div>
+  <% if (ponuda.lokacija) { -%>
+    <a href="<%= ponuda.lokacija %>" target="_blank" id="show-location">Prikaži lokaciju</a>
+  <% } -%>
+  <div class="oglas-line"></div>
+  <% if (ponuda.slike.length) { -%>
+    <img id="glavna-slika" src="/images/oglasi/<%= ponuda.slike[0] %>" alt="Slika">
+    <% if (ponuda.slike.length > 1) { -%>
+      <div id="img-selector">
+        <% if (ponuda.slike.length > 3) { -%>
+          <button class="arrow-btn arrow-btn-left" id="left">&#x23F4;</button>
+        <% } -%>
+        <img id="0" class="smol-slika izabrana-slika" src="/images/oglasi/<%= ponuda.slike[0] ? ponuda.slike[0] : 'error' %>" alt="Slika1">
+        <% for (let i = 1; i < ponuda.slike.length; i++) {
+		  let c = "smol-slika";
+		  if (i > 2) c += " d-none"; -%>
+          <img id="<%= i %>" class="<%= c %>" src="/images/oglasi/<%= ponuda.slike[i] ? ponuda.slike[i] : 'error' %>" alt="Slika<%= i + 1 %>">
+        <% }
+        if (ponuda.slike.length > 3) { -%>
+          <button class="arrow-btn arrow-btn-right" id="right">&#x23F5;</button>
+        <% } -%>
+      </div>
+     <% } -%>
+    <br>
+  <% } -%>
+  <div class="oglas-line oglas-line-2"></div>
+  <table class="prva">
+    <tr>
+      <th><%= ponuda.n_id %></th>
+      <th><%= ponuda.kvadrati ? ponuda.kvadrati + " ㎡" : "" %></th>
+      <th><%= ponuda.broj_soba %></th>
+      <th><%= ponuda.spratnost %></th>
+    </tr>
+    <tr>
+      <td>Tip Nekretnine</td>
+      <td>Kvadratura</td>
+      <td>Broj soba</td>
+      <td>Spratnost</td>
+    </tr>
+  </table>
+  <div class="oglas-line oglas-line-2"></div>
+  <% if (ponuda.karakteristike) { -%>
+    <br>
+    <% const l = Math.ceil(Object.keys(ponuda.karakteristike).length / 3);
+    for (let i = 1; i <= l; i++) { -%>
+      <table class="prva druga">
+        <tr>
+          <% for (let j = (i - 1) * 3; j < i * 3; j++) { -%>
+            <th><%= Object.keys(ponuda.karakteristike)[j] %></th>
+          <% } -%>
+        </tr>
+        <tr>
+          <% for (let j = (i - 1) * 3; j < i * 3; j++) { -%>
+            <td><%= Object.values(ponuda.karakteristike)[j] %></td>
+          <% } -%>
+        </tr>
+      </table>
+      <br>
+    <% }
+  }
+  if (ponuda.opis) { -%>
+    <div class="oglas-line"></div>
+    <div class="tekst-oglasa">
+      <h1>Dodatni Opis:</h1>
+      <p><%- ponuda.opis %></p>
+    </div>
+  <% } -%>
+  <div class="oglas-line"></div>
+  <textarea class="d-none" id="poruka" rows="5" maxlength="500"></textarea>
+  <button class="button-oglas" id="p">Pošalji Poruku</button>
+  <div id="message"></div>
+</div>
+<script>
+  // @license magnet:?xt=urn:btih:b8999bbaf509c08d127678643c515b9ab0836bae&dn=ISC.txt ISC
+  function ChangePic(p1) {
+    p1 = p1.currentTarget;
+    let slika = document.getElementById("glavna-slika");
+    slika.src = p1.src;
+
+    let previous = document.getElementsByClassName("izabrana-slika")[0];
+    previous.classList.remove("izabrana-slika");
+
+    p1.classList.add("izabrana-slika");
+  }
+  
+  <% if (ponuda.slike.length > 1) { -%>
+    for (let i = 0; i < <%= ponuda.slike.length %>; i++) {
+      let el = document.getElementById(i);
+      el.addEventListener("click", ChangePic);
+    }
+
+    <% if (ponuda.slike.length > 3) { -%>
+      let els = document.getElementsByClassName("smol-slika");
+      let fv = 0;
+      let el = document.getElementById("left");
+      el.addEventListener("click", () => {
+        if (fv > 0) {
+          els[fv + 2].classList.add("d-none");
+          els[fv - 1].classList.remove("d-none");
+          fv--;
+        }
+      });
+      
+      el = document.getElementById("right");
+      el.addEventListener("click", () => {
+        if (fv < els.length - 3) {
+          els[fv].classList.add("d-none");
+          els[fv + 3].classList.remove("d-none");
+          fv++;
+        }
+      });
+    <% }
+  } -%>
+
+  el = document.getElementById("p");
+  el.addEventListener("click", () => {
+    el = document.getElementById("message");
+    let p = document.getElementById("poruka");
+
+    if (p.classList.contains("d-none")) {
+      p.classList.remove("d-none");
+      el.innerHTML = "";
+    } else if (p.value) {
+      const data = new Blob(["poruka=" + p.value], { type: "application/x-www-form-urlencoded" });
+      navigator.sendBeacon("", data);
+
+      p.classList.add("d-none");
+      p.value = "";
+      el.innerHTML = "Poruka poslata!";
+    }
+	else
+	  el.innerHTML = "Ukucajte poruku!";
+  });
+  // @license-end
+</script>
+<%- include ('b_end'); -%>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="sr">
+  <head>
+    <title><%= title %></title>
+    <% if (locals.description) { -%>
+      <meta name="description" content="<%= description %>">
+    <% }
+    if (locals.robots) { -%>
+      <meta name="robots" content="<%= robots %>">
+    <% } -%>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <meta charset="UTF-8">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap"></noscript>
+    <link href="/css/<%= css %>.min.css" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon.webp">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+  </head>
+  <body>
+    <header>
+      <div id="logo">
+        <a href="/"><img src="/images/logo.png" alt="logo"></a>
+        <div id="logo-right">
+          <h2>ARNO - Niš</h2>
+          <p>Agencija za konsalting, posredovanje i marketing</p>
+        </div>
+      </div>

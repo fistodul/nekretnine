@@ -1,0 +1,453 @@
+<%- include ('b'); %>
+</header>
+<a href="/admin/dodajstan">Dodajte stan</a><br>
+<% let d = 0; -%>
+<button type="button" id="0">Poruke (<%= poruke.length %>)</button>
+<button type="button" id="1">Reklame</button>
+<button type="button" id="2">Vrste</button>
+<button type="button" id="3">Lokacije</button>
+<div class="d-none" id="0d">
+  <div id="0e">
+    <% for (const poruka of poruke) { -%>
+      <div>
+        <a href="/oglas/<%= poruka.p_id %>" target="_blank"><%= poruka.p_id %></a>
+	      <button type="button" id="<%= d++ %>bd">-</button><br>
+        <%= poruka.poruka %><br>
+      </div>
+    <% } -%>
+  </div>
+  <br>
+</div>
+<div class="d-none" id="1d">
+  <form action="/admin/replace_reklame" method="POST" enctype="multipart/form-data">
+    <div id="1e">
+      <% for (let i = 0; i < reklame.length; i++) { -%>
+        <div>
+          <button type="button" id="<%= d %>bd">-</button> <button type="button" id="<%= d %>eu">↑</button> <button type="button" id="<%= d++ %>ed">↓</button><br>
+          <img class="ponuda-img" src="/images/oglasi/<%= reklame[i].slika ? reklame[i].slika : 'error' %>" alt="Slika"><br>
+          <input type="file" name="slika<%= i + 1 %>" accept=".jpg,.jpeg,.png,.gif,.webp"><br>
+          <textarea name="poruka<%= i + 1 %>" rows="5" cols="35" maxlength="280"><%= reklame[i].poruka %></textarea><br>
+          Link: <input type="text" name="link<%= i + 1 %>" value="<%= reklame[i].link %>" size="40" maxlength="80">
+        </div>
+      <% } -%>
+	  </div>
+    <br>
+    <button type="button" id="1a">+</button><br>
+    <input type="submit" value="Pošalji">
+  </form>
+  <br>
+</div>
+<div class="d-none" id="2d">
+  <form action="/admin/replace/vrste" method="POST">
+    <div id="2e">
+      <% for (let i = 0; i < vrste.length; i++) { -%>
+        <div>
+          <div>
+            <span><%= vrste[i].ime %></span> <button type="button" id="<%= d %>ee">e</button> <button type="button" id="<%= d %>bd">-</button>
+          </div>
+          <div class="d-none">
+            <input type="text" value="<%= vrste[i].ime %>" size="29" maxlength="35">
+            <button type="button" id="<%= d %>bc">✓</button> <button type="button" id="<%= d %>eu">↑</button> <button type="button" id="<%= d++ %>ed">↓</button>
+          </div>
+          <textarea name="<%= vrste[i].ime %>" rows="5" cols="35">
+            <% for (const nekretnina of nekretnine[i].slice(0, -1)) { -%>
+              <%= nekretnina["ime"] %>
+            <% }
+            for (const nekretnina of nekretnine[i].slice(-1)) { -%>
+              <%= nekretnina["ime"] -%>
+            <% } -%>
+          </textarea>
+          <br>
+        </div>
+      <% } -%>
+	  </div>
+	  <br>
+    <button type="button" id="2a">+</button><br>
+    <input type="submit" value="Pošalji">
+  </form>
+  <br>
+</div>
+<div class="d-none" id="3d">
+  <form action="/admin/replace/lokacije" method="POST">
+    <div id="3e">
+      <% for (let i = 0; i < lokacije.length; i++) { -%>
+        <div>
+          <div>
+            <button type="button" id="<%= 4 + i %>"><%= lokacije[i].ime %></button> <button type="button" id="<%= d %>ee">e</button> <button type="button" id="<%= d %>bd">-</button>
+          </div>
+          <div class="d-none">
+            <input type="text" value="<%= lokacije[i].ime %>" size="29" maxlength="20">
+            <button type="button" id="<%= d %>bc">✓</button> <button type="button" id="<%= d %>eu">↑</button> <button type="button" id="<%= d++ %>ed">↓</button>
+          </div>
+          <textarea class="d-none" id="<%= 4 + i %>d" name="<%= lokacije[i].ime %>" rows="5" cols="35">
+            <% for (const ulica of ulice[i].slice(0, -1)) { -%>
+              <%= ulica["ime"] %>
+            <% }
+            for (const ulica of ulice[i].slice(-1)) { -%>
+              <%= ulica["ime"] -%>
+            <% } -%>
+          </textarea>
+        </div>
+      <% } -%>
+    </div>
+    <br>
+    <button type="button" id="3a">+</button><br>
+    <input type="submit" value="Pošalji">
+  </form>
+  <br>
+</div>
+<form>
+  Pretraga stana:<br>
+  <input type="text" size = "29" name="search"><br>
+  <br>
+  <input type="submit" value="Pošalji">
+</form>
+<% if (locals.ponude) {
+  if (ponude.length) { -%>
+    <br>
+    Rezultati:<br>
+    <div class="tekst-oglasa">
+      <% for (const ponuda of ponude) { -%>
+        <div>
+          <a href="/oglas/<%= ponuda.id %>" target="_blank"><%= ponuda.id %></a>
+          <a href="/admin/dodajstan?id=<%= ponuda.id %>&n_id=<%= ponuda.n_id2 %>&u_id=<%= ponuda.u_id2 %>&cena=<%= ponuda.cena %>&kvadrati=<%= ponuda.kvadrati %>&broj_soba=<%= ponuda.broj_soba %>&izdavanje=<%= ponuda.izdavanje %>">e</a>
+          <button type="button" id="<%= d++ %>bd">-</button><br>
+          Tip nekretnine: <%= ponuda.n_id %><br>
+          Broj soba: <%= ponuda.broj_soba %><br>
+          Ulice: 
+          <% for (const ulica of ponuda.u_id) { -%>
+            <%= ulica + ", "-%>
+          <% } -%>
+          <br>
+          <br>
+        </div>
+      <% } -%>
+    </div>
+  <% } else { -%>
+    Nema rezultata
+  <% }
+} -%>
+<script>
+  // @license magnet:?xt=urn:btih:b8999bbaf509c08d127678643c515b9ab0836bae&dn=ISC.txt ISC
+  for (let i = 0; i < 4 + <%= lokacije.length %>; i++) {
+    document.getElementById(i).addEventListener("click", () => {
+      const el = document.getElementById(i + "d");
+
+      if (el.classList.contains("d-none"))
+        el.classList.remove("d-none");
+      else
+        el.classList.add("d-none");
+    });
+  }
+
+  <% for (let i = 0; i < poruke.length; i++) { -%>
+    document.getElementById("<%= i %>bd").addEventListener("click", () => {
+      navigator.sendBeacon("/admin/deletemessage/<%= poruke[i].id %>", "");
+    });
+  <% } -%>
+
+  for (let i = 0; i < <%= d %>; i++) {
+    let el = document.getElementById(i + "bd");
+    el.addEventListener("click", () => {
+      while (!el.parentElement.id.endsWith("e"))
+        el = el.parentElement;
+      el.parentNode.removeChild(el);
+    });
+  }
+
+  <% if (locals.ponude) {
+    for (let i = d - ponude.length; i < d; i++) { -%>
+      document.getElementById("<%= i %>bd").addEventListener("click", () => {
+        navigator.sendBeacon("/admin/deleteestate/<%= ponude[ponude.length - (d - i)].id %>", "");
+      });
+    <% }
+
+    d -= ponude.length;
+  } -%>
+
+  for (let i = <%= poruke.length %>; i < <%= d %>; i++) {
+    let el = document.getElementById(i + "eu");
+    el.addEventListener("click", () => {
+      while (!el.parentElement.id.endsWith("e"))
+        el = el.parentElement;
+
+      if (el.previousElementSibling) {
+        const temp = el.cloneNode(true);
+        el.parentElement.replaceChild(el.previousElementSibling, el);
+        el.parentElement.replaceChild(temp, el.previousElementSibling);
+      }
+    });
+
+    el = document.getElementById(i + "ed");
+    el.addEventListener("click", () => {
+      while (!el.parentElement.id.endsWith("e"))
+        el = el.parentElement;
+
+      if (el.nextElementSibling) {
+        const temp = el.cloneNode(true);
+        const mrzim = el.nextElementSibling.cloneNode(true);
+        el.parentElement.replaceChild(temp, el.nextElementSibling);
+        el.parentElement.replaceChild(mrzim, el);
+      }
+    });
+  }
+
+  let reklame_id = <%= reklame.length + 1 %>;
+  document.getElementById("1a").addEventListener("click", () => {
+    const el = document.createElement("div");
+
+    let temp = document.createElement("button");
+    temp.type = "button";
+    temp.innerHTML = "-";
+    temp.addEventListener("click", () => {
+      el.parentNode.removeChild(el);
+      reklame_id--;
+    });
+    el.appendChild(temp);
+
+    temp = document.createTextNode(" ");
+    el.appendChild(temp);
+
+    temp = document.createElement("button");
+    temp.type = "button";
+    temp.innerHTML = "↑";
+    el.appendChild(temp);
+
+    temp = document.createTextNode(" ");
+    el.appendChild(temp);
+
+    temp = document.createElement("button");
+    temp.type = "button";
+    temp.innerHTML = "↓";
+    el.appendChild(temp);
+
+    temp = document.createElement("br");
+    el.appendChild(temp);
+
+    temp = document.createElement("input");
+    temp.name = "slika" + reklame_id;
+    temp.type = "file";
+    temp.accept = ".jpg,.jpeg,.png,.gif,.webp";
+    el.appendChild(temp);
+
+    temp = document.createElement("br");
+    el.appendChild(temp);
+
+    temp = document.createElement("textarea");
+    temp.name = "poruka" + reklame_id;
+    temp.rows = "5";
+    temp.cols = "35";
+    el.appendChild(temp);
+
+    temp = document.createElement("br");
+    el.appendChild(temp);
+
+    temp = document.createTextNode("Link: ");
+    el.appendChild(temp);
+
+    temp = document.createElement("input");
+    temp.name = "link" + reklame_id;
+    temp.type = "text";
+    temp.size = "40";
+    temp.maxlength = "80";
+    el.appendChild(temp);
+
+    temp = document.getElementById("1e");
+    temp.appendChild(el);
+    reklame_id++;
+  });
+
+  for (let i = <%= poruke.length + reklame.length %>; i < <%= d %>; i++) {
+    const el = document.getElementById(i + "ee").parentElement;
+    document.getElementById(i + "ee").addEventListener("click", () => {
+      el.classList.add("d-none");
+      el.nextElementSibling.classList.remove("d-none");
+    });
+
+    document.getElementById(i + "bc").addEventListener("click", () => {
+      el.firstElementChild.innerHTML = el.nextElementSibling.firstElementChild.value;
+      el.parentElement.children[2].name = el.firstElementChild.innerHTML;
+      el.classList.remove("d-none");
+      el.nextElementSibling.classList.add("d-none");
+    });
+  }
+
+  document.getElementById("2a").addEventListener("click", () => {
+    const el = document.createElement("div");
+
+    let temp = document.createElement("div");
+    temp.className = "d-none";
+
+    let temp2 = document.createElement("span");
+    temp.appendChild(temp2);
+
+    temp2 = document.createTextNode(" ");
+    temp.appendChild(temp2);
+
+    temp2 = document.createElement("button");
+    temp2.type = "button";
+    temp2.innerHTML = "e";
+    temp2.addEventListener("click", () => {
+      temp.classList.add("d-none");
+      temp.nextElementSibling.classList.remove("d-none");
+    });
+    temp.appendChild(temp2);
+
+    temp2 = document.createTextNode(" ");
+    temp.appendChild(temp2);
+
+    temp2 = document.createElement("button");
+    temp2.type = "button";
+    temp2.innerHTML = "-";
+    temp2.addEventListener("click", () => {
+      el.parentNode.removeChild(el);
+    });
+    temp.appendChild(temp2);
+    el.appendChild(temp);
+
+    temp = document.createElement("div");
+    temp2 = document.createElement("input");
+    temp2.size = "29";
+    temp2.maxlength = "35";
+    temp.appendChild(temp2);
+
+    temp2 = document.createTextNode(" ");
+    temp.appendChild(temp2);
+
+    temp2 = document.createElement("button");
+    temp2.type = "button";
+    temp2.innerHTML = "✓";
+    temp2.addEventListener("click", () => {
+      const el2 = el.firstElementChild;
+      el2.firstElementChild.innerHTML = el2.nextElementSibling.firstElementChild.value;
+      el2.parentElement.children[2].name = el2.firstElementChild.innerHTML;
+      el2.classList.remove("d-none");
+      el2.nextElementSibling.classList.add("d-none");
+    });
+    temp.appendChild(temp2);
+
+    temp2 = document.createTextNode(" ");
+    temp.appendChild(temp2);
+
+    temp2 = document.createElement("button");
+    temp2.type = "button";
+    temp2.innerHTML = "↑";
+    temp.appendChild(temp2);
+
+    temp2 = document.createTextNode(" ");
+    temp.appendChild(temp2);
+
+    temp2 = document.createElement("button");
+    temp2.type = "button";
+    temp2.innerHTML = "↓";
+    temp.appendChild(temp2);
+    el.appendChild(temp);
+
+    temp = document.createElement("textarea");
+    temp.rows = "5";
+    temp.cols = "35";
+    el.appendChild(temp);
+
+    temp = document.getElementById("2e");
+    temp.appendChild(el);
+  });
+
+  let lokacije_id = <%= lokacije.length %>;
+  document.getElementById("3a").addEventListener("click", () => {
+    const el = document.createElement("div");
+
+    let temp = document.createElement("div");
+    temp.className = "d-none";
+
+    let temp2 = document.createElement("button");
+    temp2.type = "button";
+    const mrzim = lokacije_id;
+    temp2.addEventListener("click", () => {
+      const el = document.getElementById(4 + mrzim + "d");
+
+      if (el.classList.contains("d-none"))
+        el.classList.remove("d-none");
+      else
+        el.classList.add("d-none");
+    });
+    temp.appendChild(temp2);
+
+    temp2 = document.createTextNode(" ");
+    temp.appendChild(temp2);
+
+    temp2 = document.createElement("button");
+    temp2.type = "button";
+    temp2.innerHTML = "e";
+    temp2.addEventListener("click", () => {
+      temp.classList.add("d-none");
+      temp.nextElementSibling.classList.remove("d-none");
+    });
+    temp.appendChild(temp2);
+
+    temp2 = document.createTextNode(" ");
+    temp.appendChild(temp2);
+
+    temp2 = document.createElement("button");
+    temp2.type = "button";
+    temp2.innerHTML = "-";
+    temp2.addEventListener("click", () => {
+      el.parentNode.removeChild(el);
+      lokacije_id--;
+    });
+    temp.appendChild(temp2);
+    el.appendChild(temp);
+
+    temp = document.createElement("div");
+    temp2 = document.createElement("input");
+    temp2.size = "29";
+    temp2.maxlength = "35";
+    temp.appendChild(temp2);
+
+    temp2 = document.createTextNode(" ");
+    temp.appendChild(temp2);
+
+    temp2 = document.createElement("button");
+    temp2.type = "button";
+    temp2.innerHTML = "✓";
+    temp2.addEventListener("click", () => {
+      const el2 = el.firstElementChild;
+      el2.firstElementChild.innerHTML = el2.nextElementSibling.firstElementChild.value;
+      el2.parentElement.children[2].name = el2.firstElementChild.innerHTML;
+      el2.classList.remove("d-none");
+      el2.nextElementSibling.classList.add("d-none");
+    });
+    temp.appendChild(temp2);
+
+    temp2 = document.createTextNode(" ");
+    temp.appendChild(temp2);
+
+    temp2 = document.createElement("button");
+    temp2.type = "button";
+    temp2.innerHTML = "↑";
+    temp.appendChild(temp2);
+
+    temp2 = document.createTextNode(" ");
+    temp.appendChild(temp2);
+
+    temp2 = document.createElement("button");
+    temp2.type = "button";
+    temp2.innerHTML = "↓";
+    temp.appendChild(temp2);
+    el.appendChild(temp);
+
+    temp = document.createElement("textarea");
+    temp.className = "d-none";
+    temp.id = 4 + lokacije_id + "d";
+    temp.rows = "5";
+    temp.cols = "35";
+    el.appendChild(temp);
+
+    temp = document.getElementById("3e");
+    temp.appendChild(el);
+    lokacije_id++;
+  });
+
+  document.getElementsByTagName("header")[0].style.height = "50vh";
+  // @license-end
+</script>
+<%- include ('b_end'); -%>
