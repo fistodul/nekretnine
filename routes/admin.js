@@ -9,7 +9,7 @@ const pool = require("mariadb").createPool({
   password: process.env.DB_Pass,
   database: process.env.DB_Db,
   useSSL: false,
-  allowPublicKeyRetrieval: true,
+  allowPublicKeyRetrieval: true
 });
 
 async function admindata(conn, id) {
