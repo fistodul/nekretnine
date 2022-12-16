@@ -7,7 +7,9 @@ const pool = require("mariadb").createPool({
   host: process.env.DB_Host,
   user: process.env.DB_User,
   password: process.env.DB_Pass,
-  database: process.env.DB_Db
+  database: process.env.DB_Db,
+  useSSL: false,
+  allowPublicKeyRetrieval: true
 });
 
 async function admindata(conn, id) {
@@ -18,10 +20,8 @@ async function admindata(conn, id) {
   if (id) {
     let sql = "SELECT id, n_id, cena, izdavanje, kvadrati, broj_soba, karakteristike FROM prostori WHERE ";
 
-    if (id === "drugo")
-      id = 5.5;
-    if (Number(id))
-      sql += "prostori.id = ? OR broj_soba = ?";
+    if (id === "drugo") id = 5.5;
+    if (Number(id)) sql += "prostori.id = ? OR broj_soba = ?";
     else {
       id = id.toLowerCase();
       sql += `? = (SELECT LOWER(ime) FROM nekretnine WHERE id = prostori.n_id)
@@ -47,8 +47,7 @@ router.route("/login")
     res.render("admin_login");
   })
   .post((req, res) => {
-    if (bcrypt.compareSync(req.body.password, hash))
-      res.cookie("nekretnine_admin", hash, {maxAge: 172800000, signed: true});
+    if (bcrypt.compareSync(req.body.password, hash)) res.cookie("nekretnine_admin", hash, { maxAge: 172800000, signed: true });
     res.redirect("/admin");
   });
 
@@ -94,8 +93,7 @@ router.route("/dodajstan")
       conn = await pool.getConnection();
 
       let data = await common.indexdata(conn, 0);
-      if (req.query.id)
-        data.ponuda = (await common.estatedata(await conn.query("SELECT * FROM prostori WHERE id = ?", req.query.id), conn))[0];
+      if (req.query.id) data.ponuda = (await common.estatedata(await conn.query("SELECT * FROM prostori WHERE id = ?", req.query.id), conn))[0];
 
       res.render("admin_dodajstan", data);
     } catch (err) {
@@ -112,13 +110,11 @@ router.route("/dodajstan")
       await conn.query("START TRANSACTION");
 
       let id;
-      if (!(id = req.body.id))
-        id = (await conn.query("SELECT IFNULL(MAX(id), 1) AS max FROM prostori"))[0].max + 1;
+      if (!(id = req.body.id)) id = (await conn.query("SELECT IFNULL(MAX(id), 1) AS max FROM prostori"))[0].max + 1;
 
-      let sql = "REPLACE INTO prostori (id, n_id, izdavanje, broj_soba"
+      let sql = "REPLACE INTO prostori (id, n_id, izdavanje, broj_soba";
       let sql2 = ") VALUES (" + id + ", ?, ?, ?";
-      if (!Number(req.body.broj_soba))
-        req.body.broj_soba = 5.5;
+      if (!Number(req.body.broj_soba)) req.body.broj_soba = 5.5;
       let data = [req.body.n_id, req.body.izdavanje, req.body.broj_soba];
 
       for (const i of ["cena", "stara_cena", "kvadrati", "spratnost", "karakteristike", "opis", "lokacija", "currency", "top"])
@@ -135,22 +131,21 @@ router.route("/dodajstan")
       await conn.query(sql, id);
 
       sql = "INSERT INTO prostorulice (p_id, u_id) VALUES ";
-      sql2 = 0
+      sql2 = 0;
       data = [];
       while (req.body["u_id" + sql2]) {
         sql += "(?, ?)";
         data.push(id, req.body["u_id" + sql2++]);
-        if (req.body["u_id" + sql2])
-          sql += ",";
+        if (req.body["u_id" + sql2]) sql += ",";
       }
       await conn.query(sql, data);
 
       sql = "REPLACE INTO slike (id, p_id, slika) VALUES ";
-      sql2 = 0
+      sql2 = 0;
       const max = (await conn.query("SELECT IFNULL(MAX(id), 1) AS max FROM slike"))[0].max + 1;
       let del = "0";
       data = [];
-      let temp = (await conn.query("SELECT id, slika FROM slike WHERE p_id = ?", id));
+      let temp = await conn.query("SELECT id, slika FROM slike WHERE p_id = ?", id);
       while (temp[sql2] || (req.files && req.files["slika" + sql2])) {
         sql += "(";
         if (temp[sql2]) {
@@ -166,13 +161,11 @@ router.route("/dodajstan")
         if (req.files && req.files["slika" + sql2]) {
           temp2 = req.files["slika" + sql2].name;
           req.files["slika" + sql2].mv("public" + "/images/oglasi/" + id + "/" + temp2);
-        } else
-          temp2 = temp[sql2].slika;
+        } else temp2 = temp[sql2].slika;
         sql2++;
 
         data.push(id, temp2);
-        if (req.files && req.files["slika" + sql2])
-          sql += ",";
+        if (req.files && req.files["slika" + sql2]) sql += ",";
       }
 
       if (sql2) {
@@ -182,11 +175,10 @@ router.route("/dodajstan")
       }
 
       if (req.body.karakteristika0) {
-        sql = "UPDATE prostori SET karakteristike = ? WHERE id = ?"
+        sql = "UPDATE prostori SET karakteristike = ? WHERE id = ?";
         sql2 = 0;
         data = {};
-        while (req.body["karakteristika" + sql2])
-          data[req.body["karakteristika" + sql2]] = req.body["vrednost" + sql2++];
+        while (req.body["karakteristika" + sql2]) data[req.body["karakteristika" + sql2]] = req.body["vrednost" + sql2++];
         await conn.query(sql, [JSON.stringify(data), id]);
       }
 
@@ -238,8 +230,8 @@ router.post("/replace_reklame", async (req, res) => {
     let data = [];
     let num = (await conn.query("SELECT IFNULL(MIN(id), 1) AS min FROM reklame"))[0].min;
     const l = num + Object.keys(req.body).length / 2;
-    for (;num < l; num++) {
-      let sql = "REPLACE INTO reklame (id, poruka"
+    for (; num < l; num++) {
+      let sql = "REPLACE INTO reklame (id, poruka";
       let sql2 = ") VALUES (" + num + ", ?";
       let data = [req.body["poruka" + num]];
 
@@ -250,8 +242,7 @@ router.post("/replace_reklame", async (req, res) => {
         if (req.files && req.files["slika" + num]) {
           temp = req.files["slika" + num].name;
           req.files["slika" + num].mv("public" + "/images/oglasi/" + temp);
-        } else
-          temp = temp.slika;
+        } else temp = temp.slika;
         data.push(temp);
       }
 
@@ -303,12 +294,11 @@ router.post("/replace/:table", async (req, res) => {
       for (let ulica = 0; ulica < req.body[key].length; ulica++) {
         sql2 += "(?, ?, ?)";
         data2.push(j, i, req.body[key][ulica]);
-        if (ulica < Object.keys(req.body[key]).length - 1)
-          sql2 += ", ";
+        if (ulica < Object.keys(req.body[key]).length - 1) sql2 += ", ";
         j++;
       }
 
-      sql += "(?, ?)"
+      sql += "(?, ?)";
       data.push(i, key);
       if (Object.keys(req.body).indexOf(key) < Object.keys(req.body).length - 1) {
         sql += ", ";

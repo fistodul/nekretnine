@@ -5,7 +5,9 @@ const pool = require("mariadb").createPool({
   host: process.env.DB_Host,
   user: process.env.DB_User,
   password: process.env.DB_Pass,
-  database: process.env.DB_Db
+  database: process.env.DB_Db,
+  useSSL: false,
+  allowPublicKeyRetrieval: true
 });
 
 async function topdata(ponude, conn) {
@@ -16,10 +18,8 @@ async function topdata(ponude, conn) {
 
     let temp = (await conn.query("SELECT slika FROM slike WHERE p_id = " + ponude[i].id + " LIMIT 1"))[0];
 
-    if (temp)
-      ponude[i].slika = ponude[i].id + "/" + temp.slika;
-    if (ponude[i].broj_soba === 5.5)
-      ponude[i].broj_soba = "drugo";
+    if (temp) ponude[i].slika = ponude[i].id + "/" + temp.slika;
+    if (ponude[i].broj_soba === 5.5) ponude[i].broj_soba = "drugo";
   }
 
   return ponude;
@@ -61,14 +61,8 @@ router.get("/pretraga", async (req, res) => {
     AND ? IN (SELECT u_id FROM prostorulice WHERE p_id = prostori.id)
     AND izdavanje = ?`;
 
-    if (req.query.broj_soba === "drugo")
-      req.query.broj_soba = 5.5;
-    let arr = [
-      req.query.n_id,
-      req.query.broj_soba,
-      req.query.u_id0,
-      req.query.izdavanje
-    ];
+    if (req.query.broj_soba === "drugo") req.query.broj_soba = 5.5;
+    let arr = [req.query.n_id, req.query.broj_soba, req.query.u_id0, req.query.izdavanje];
 
     if (req.query.cena) {
       sql += " AND cena <= ?";
@@ -100,11 +94,10 @@ router.get("/all", async (req, res) => {
     conn = await pool.getConnection();
 
     let data = await common.indexdata(conn);
-    let sql = "SELECT * FROM top_ponude LIMIT 9"
+    let sql = "SELECT * FROM top_ponude LIMIT 9";
     data.l = (await conn.query("SELECT CEIL(COUNT(*) / 9) AS l FROM top_ponude"))[0].l;
     const temp = Math.abs(req.query.page);
-    if (temp && req.query.page && temp <= data.l)
-      sql += " OFFSET " + 9 * (temp - 1);
+    if (temp && req.query.page && temp <= data.l) sql += " OFFSET " + 9 * (temp - 1);
 
     data.ponude = await topdata(await conn.query(sql), conn, 0);
     data.top = 1;
@@ -173,7 +166,7 @@ router.route("/oglas/:id")
 
       let sql = `SELECT id, n_id, cena, stara_cena, kvadrati, broj_soba, spratnost, karakteristike, opis, currency, lokacija
       FROM prostori
-      WHERE id = ?`
+      WHERE id = ?`;
       sql = await conn.query(sql, req.params.id);
 
       if (!sql[0]) {
@@ -184,7 +177,7 @@ router.route("/oglas/:id")
       sql = (await common.estatedata(sql, conn))[0];
 
       res.locals.title = "ARNO Nekretnine: " + sql.u_id[0];
-      res.render("oglas", {ponuda: sql});
+      res.render("oglas", { ponuda: sql });
     } catch (err) {
       console.log(err);
     } finally {
