@@ -43,7 +43,6 @@ router.use((req, res, next) => {
 });
 
 router.route("/login")
-  .route("/login")
   .get((req, res) => {
     res.render("admin_login");
   })
