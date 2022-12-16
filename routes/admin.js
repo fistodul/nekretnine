@@ -85,7 +85,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router
+router.route("/dodajstan")
   .route("/dodajstan")
   .get(async (req, res) => {
     let conn;
