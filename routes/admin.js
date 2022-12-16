@@ -9,7 +9,7 @@ const pool = require("mariadb").createPool({
   password: process.env.DB_Pass,
   database: process.env.DB_Db,
   useSSL: false,
-  allowPublicKeyRetrieval: true,
+  allowPublicKeyRetrieval: true
 });
 
 async function admindata(conn, id) {
@@ -42,8 +42,7 @@ router.use((req, res, next) => {
   next();
 });
 
-router
-  .route("/login")
+router.route("/login")
   .get((req, res) => {
     res.render("admin_login");
   })
@@ -86,8 +85,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router
-  .route("/dodajstan")
+router.route("/dodajstan")
   .get(async (req, res) => {
     let conn;
 

@@ -7,7 +7,7 @@ const pool = require("mariadb").createPool({
   password: process.env.DB_Pass,
   database: process.env.DB_Db,
   useSSL: false,
-  allowPublicKeyRetrieval: true,
+  allowPublicKeyRetrieval: true
 });
 
 async function topdata(ponude, conn) {
@@ -157,8 +157,7 @@ router.get("/filter", async (req, res) => {
 });
 */
 
-router
-  .route("/oglas/:id")
+router.route("/oglas/:id")
   .get(async (req, res) => {
     let conn;
 
