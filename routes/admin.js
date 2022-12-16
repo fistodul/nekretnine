@@ -42,7 +42,7 @@ router.use((req, res, next) => {
   next();
 });
 
-router
+router.route("/login")
   .route("/login")
   .get((req, res) => {
     res.render("admin_login");
