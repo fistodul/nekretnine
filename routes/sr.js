@@ -158,7 +158,6 @@ router.get("/filter", async (req, res) => {
 */
 
 router.route("/oglas/:id")
-  .route("/oglas/:id")
   .get(async (req, res) => {
     let conn;
 
