@@ -26,7 +26,7 @@
      });
 
     insertAfter(el, document.getElementsByName("u_id" + u_id)[0]);
-  }idStr= 4
+  }
 
   let file_id = 0;
   function addFile() {
@@ -56,9 +56,7 @@
 
     el.parentNode.insertBefore(temp, el);
 
-    el = makeEl("input", {name:"vrednost" + p_id, type:"text", maxLength:"25", placeholder:"Vrednost"});
-
-    insertAfter(el, temp);
+    insertAfter(makeEl("input", {name:"vrednost" + p_id, type:"text", maxLength:"25", placeholder:"Vrednost"}), temp);
     insertAfter(document.createElement("br"), el);
 
     temp = makeEl("button", {type:"button", innerHTML:"-"}, () => {
@@ -162,8 +160,7 @@
       <% }
     } -%>
   } else
-  
-    el = "Dodaj oglas";
+  el = "Dodaj oglas";
 
   document.getElementsByName("n_id")[0].options[0].text = "Šta dodajete?";
   document.getElementsByName("u_id0")[0].options[0].text = "Gde dodajete?";

@@ -201,7 +201,6 @@
       el.parentNode.removeChild(el);
       reklame_id--;
     }))
-
     el.appendChild( document.createTextNode(" "));
 
     el.appendChild(makeEl("button", {type:"button", innerHTML:"↑"}));
@@ -243,11 +242,8 @@
 
     let temp = makeEl("div", {className:"d-none"});
 
-    let temp2 = document.createElement("span");
-    temp.appendChild(temp2);
-
-    temp2 = document.createTextNode(" ");
-    temp.appendChild(temp2);
+    temp.appendChild(document.createElement("span"););
+    temp.appendChild(document.createTextNode(" "););
 
     temp2 = makeEl("button", {type:"button", innerHTML:"e"}, () => {
        temp.classList.add("d-none");
