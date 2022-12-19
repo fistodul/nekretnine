@@ -11,7 +11,6 @@ There is an admin part where real estate objects can be configured alongside the
 TODO:
 - [ ] Make nekretnine company agnostic, with assets configurable in the admin panel
 - [ ] Add possibility to use docker (https://hub.docker.com/r/darthsim/imgproxy) / node.js (https://github.com/lovell/sharp) microservice for resizing images into thumbnail versions
-- [ ] Improve and refactor admin part frontend javascript into a mini library
 - [ ] Improve page number logic on the search results pages
 - [ ] Refactor backend code to make better use of async / await
 - [ ] Make sure the English translation is complete (including switching database to English)
