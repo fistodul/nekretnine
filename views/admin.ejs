@@ -201,7 +201,6 @@
       el.parentNode.removeChild(el);
       reklame_id--;
     }))
-
     el.appendChild( document.createTextNode(" "));
 
     el.appendChild(makeEl("button", {type:"button", innerHTML:"↑"}));
@@ -243,61 +242,42 @@
 
     let temp = makeEl("div", {className:"d-none"});
 
-    let temp2 = document.createElement("span");
-    temp.appendChild(temp2);
+    temp.appendChild(document.createElement("span"));
+    temp.appendChild(document.createTextNode(" "));
 
-    temp2 = document.createTextNode(" ");
-    temp.appendChild(temp2);
-
-    temp2 = makeEl("button", {type:"button", innerHTML:"e"}, () => {
+    temp.appendChild(makeEl("button", {type:"button", innerHTML:"e"}, () => {
        temp.classList.add("d-none");
        temp.nextElementSibling.classList.remove("d-none");
-     });
+     }));
 
-    temp.appendChild(temp2);
+    temp.appendChild( document.createTextNode(" "));
 
-    temp2 = document.createTextNode(" ");
-    temp.appendChild(temp2);
-
-    makeEl("button", {type:"button", innerHTML:"-"}, () => {
+    temp.appendChild(makeEl("button", {type:"button", innerHTML:"-"}, () => {
        el.parentNode.removeChild(el);
-     });
-
-    temp.appendChild(temp2);
+     }));
     el.appendChild(temp);
 
-    temp = document.createElement("div");
+    temp = document.createElement("div"); 
 
-    temp2 = makeEl("input", {size:"29", maxLength:"35"});
+    temp.appendChild(makeEl("input", {size:"29", maxLength:"35"}));
 
-    temp.appendChild(temp2);
+    temp.appendChild(document.createTextNode(" "));
 
-    temp2 = document.createTextNode(" ");
-    temp.appendChild(temp2);
-
-    temp2 = makeEl("button", {type:"button", innerHTML:"✓"}, () => {
+    temp.appendChild(makeEl("button", {type:"button", innerHTML:"✓"}, () => {
        const el2 = el.firstElementChild;
        el2.firstElementChild.innerHTML = el2.nextElementSibling.firstElementChild.value;
        el2.parentElement.children[2].name = el2.firstElementChild.innerHTML;
        el2.classList.remove("d-none");
        el2.nextElementSibling.classList.add("d-none");
-     });
+     }));
 
-    temp.appendChild(temp2);
+    temp.appendChild(document.createTextNode(" "));
 
-    temp2 = document.createTextNode(" ");
-    temp.appendChild(temp2);
+    temp.appendChild(makeEl("button", {type:"button", innerHTML:"↑"}));
 
-    temp2 = makeEl("button", {type:"button", innerHTML:"↑"});
+    temp.appendChild(document.createTextNode(" "););
 
-    temp.appendChild(temp2);
-
-    temp2 = document.createTextNode(" ");
-    temp.appendChild(temp2);
-
-    temp2 = makeEl("button", {type:"button", innerHTML:"↓"});
-
-    temp.appendChild(temp2);
+    temp.appendChild(makeEl("button", {type:"button", innerHTML:"↓"}););
     el.appendChild(temp);
 
     temp = makeEl("textarea", {rows:"5", cols:"35"});
