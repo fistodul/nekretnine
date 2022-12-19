@@ -2,15 +2,7 @@ const router = require("express").Router(),
   common = require("./common"),
   bcrypt = require("bcryptjs");
 
-const pool = require("mariadb").createPool({
-  //connectionLimit: 5,
-  host: process.env.DB_Host,
-  user: process.env.DB_User,
-  password: process.env.DB_Pass,
-  database: process.env.DB_Db,
-  useSSL: false,
-  allowPublicKeyRetrieval: true
-});
+const pool = require("mariadb").createPool(common.dbOptions);
 
 async function admindata(conn, id) {
   let data = await common.indexdata(conn, 0);

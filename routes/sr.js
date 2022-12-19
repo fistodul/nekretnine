@@ -1,14 +1,7 @@
 const router = require("express").Router(),
   common = require("./common");
 
-const pool = require("mariadb").createPool({
-  host: process.env.DB_Host,
-  user: process.env.DB_User,
-  password: process.env.DB_Pass,
-  database: process.env.DB_Db,
-  useSSL: false,
-  allowPublicKeyRetrieval: true
-});
+const pool = require("mariadb").createPool(common.dbOptions);
 
 async function topdata(ponude, conn) {
   for (let i = 0; i < ponude.length; i++) {
@@ -177,7 +170,7 @@ router.route("/oglas/:id")
       sql = (await common.estatedata(sql, conn))[0];
 
       res.locals.title = "ARNO Nekretnine: " + sql.u_id[0];
-      res.render("oglas", { ponuda: sql });
+      res.render("oglas", {ponuda: sql});
     } catch (err) {
       console.log(err);
     } finally {

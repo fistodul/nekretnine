@@ -25,7 +25,7 @@ With Node.js installed, running `npm install` will download and install all the 
 ## Import the database
 The database in use by the project is MariaDB which is cross compatible with MySQL, first the database for app should be created:
 ```
-mysql -u root -p -e "CREATE DATABASE `nekretnine`"
+mysql -u root -p -e "CREATE DATABASE nekretnine"
 ```
 Then the schema should be imported into the created database
 ```

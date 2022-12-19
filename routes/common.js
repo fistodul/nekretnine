@@ -59,7 +59,17 @@ async function indexdata(conn, limited = 1) {
   };
 }
 
+let dbOptions = {
+  host: process.env.DB_Host,
+  user: process.env.DB_User,
+  password: process.env.DB_Pass,
+  database: process.env.DB_Db,
+  useSSL: false,
+  allowPublicKeyRetrieval: true
+}
+
 module.exports = {
   estatedata,
-  indexdata
+  indexdata,
+  dbOptions
 };
