@@ -127,6 +127,7 @@
     Nema rezultata
   <% }
 } -%>
+<script src="/js/makeElementsFunction.min.js"></script>
 <script>
   // @license magnet:?xt=urn:btih:b8999bbaf509c08d127678643c515b9ab0836bae&dn=ISC.txt ISC
   for (let i = 0; i < 4 + <%= lokacije.length %>; i++) {
@@ -196,64 +197,28 @@
   document.getElementById("1a").addEventListener("click", () => {
     const el = document.createElement("div");
 
-    let temp = document.createElement("button");
-    temp.type = "button";
-    temp.innerHTML = "-";
-    temp.addEventListener("click", () => {
+    el.appendChild(makeEl("button", {type:"button", innerHTML:"-"}, () => {
       el.parentNode.removeChild(el);
       reklame_id--;
-    });
-    el.appendChild(temp);
+    }));
+    el.appendChild(document.createTextNode(" "));
 
-    temp = document.createTextNode(" ");
-    el.appendChild(temp);
+    el.appendChild(makeEl("button", {type:"button", innerHTML:"↑"}));
+    el.appendChild(document.createTextNode(" "));
 
-    temp = document.createElement("button");
-    temp.type = "button";
-    temp.innerHTML = "↑";
-    el.appendChild(temp);
+    el.appendChild(makeEl("button", {type:"button", innerHTML:"↓"}));
+    el.appendChild(document.createElement("br"));
 
-    temp = document.createTextNode(" ");
-    el.appendChild(temp);
+    el.appendChild(makeEl("input", {name:"slika" + reklame_id, type:"file", accept:".jpg,.jpeg,.png,.gif,.webp"}));
+    el.appendChild(document.createElement("br"));
 
-    temp = document.createElement("button");
-    temp.type = "button";
-    temp.innerHTML = "↓";
-    el.appendChild(temp);
+    el.appendChild(makeEl("textarea", {name:"poruka" + reklame_id, rows:"5", cols:"35"}));
+    el.appendChild(document.createElement("br"));
+    el.appendChild(document.createTextNode("Link: "));
 
-    temp = document.createElement("br");
-    el.appendChild(temp);
-
-    temp = document.createElement("input");
-    temp.name = "slika" + reklame_id;
-    temp.type = "file";
-    temp.accept = ".jpg,.jpeg,.png,.gif,.webp";
-    el.appendChild(temp);
-
-    temp = document.createElement("br");
-    el.appendChild(temp);
-
-    temp = document.createElement("textarea");
-    temp.name = "poruka" + reklame_id;
-    temp.rows = "5";
-    temp.cols = "35";
-    el.appendChild(temp);
-
-    temp = document.createElement("br");
-    el.appendChild(temp);
-
-    temp = document.createTextNode("Link: ");
-    el.appendChild(temp);
-
-    temp = document.createElement("input");
-    temp.name = "link" + reklame_id;
-    temp.type = "text";
-    temp.size = "40";
-    temp.maxlength = "80";
-    el.appendChild(temp);
-
-    temp = document.getElementById("1e");
-    temp.appendChild(el);
+    el.appendChild(makeEl("input", {name:"link" + reklame_id, type:"text", size:"40", maxLength:"80"}));
+    
+    document.getElementById("1e").appendChild(el);
     reklame_id++;
   });
 
@@ -275,77 +240,48 @@
   document.getElementById("2a").addEventListener("click", () => {
     const el = document.createElement("div");
 
-    let temp = document.createElement("div");
-    temp.className = "d-none";
+    let temp = makeEl("div", {className:"d-none"});
 
-    let temp2 = document.createElement("span");
-    temp.appendChild(temp2);
+    temp.appendChild(document.createElement("span"));
+    temp.appendChild(document.createTextNode(" "));
 
-    temp2 = document.createTextNode(" ");
-    temp.appendChild(temp2);
+    temp.appendChild(makeEl("button", {type:"button", innerHTML:"e"}, () => {
+       temp.classList.add("d-none");
+       temp.nextElementSibling.classList.remove("d-none");
+     }));
 
-    temp2 = document.createElement("button");
-    temp2.type = "button";
-    temp2.innerHTML = "e";
-    temp2.addEventListener("click", () => {
-      temp.classList.add("d-none");
-      temp.nextElementSibling.classList.remove("d-none");
-    });
-    temp.appendChild(temp2);
+    temp.appendChild( document.createTextNode(" "));
 
-    temp2 = document.createTextNode(" ");
-    temp.appendChild(temp2);
-
-    temp2 = document.createElement("button");
-    temp2.type = "button";
-    temp2.innerHTML = "-";
-    temp2.addEventListener("click", () => {
-      el.parentNode.removeChild(el);
-    });
-    temp.appendChild(temp2);
+    temp.appendChild(makeEl("button", {type:"button", innerHTML:"-"}, () => {
+       el.parentNode.removeChild(el);
+     }));
     el.appendChild(temp);
 
-    temp = document.createElement("div");
-    temp2 = document.createElement("input");
-    temp2.size = "29";
-    temp2.maxlength = "35";
-    temp.appendChild(temp2);
+    temp = document.createElement("div"); 
 
-    temp2 = document.createTextNode(" ");
-    temp.appendChild(temp2);
+    temp.appendChild(makeEl("input", {size:"29", maxLength:"35"}));
 
-    temp2 = document.createElement("button");
-    temp2.type = "button";
-    temp2.innerHTML = "✓";
-    temp2.addEventListener("click", () => {
-      const el2 = el.firstElementChild;
-      el2.firstElementChild.innerHTML = el2.nextElementSibling.firstElementChild.value;
-      el2.parentElement.children[2].name = el2.firstElementChild.innerHTML;
-      el2.classList.remove("d-none");
-      el2.nextElementSibling.classList.add("d-none");
-    });
-    temp.appendChild(temp2);
+    temp.appendChild(document.createTextNode(" "));
 
-    temp2 = document.createTextNode(" ");
-    temp.appendChild(temp2);
+    temp.appendChild(makeEl("button", {type:"button", innerHTML:"✓"}, () => {
+       const el2 = el.firstElementChild;
+       el2.firstElementChild.innerHTML = el2.nextElementSibling.firstElementChild.value;
+       el2.parentElement.children[2].name = el2.firstElementChild.innerHTML;
+       el2.classList.remove("d-none");
+       el2.nextElementSibling.classList.add("d-none");
+     }));
 
-    temp2 = document.createElement("button");
-    temp2.type = "button";
-    temp2.innerHTML = "↑";
-    temp.appendChild(temp2);
+    temp.appendChild(document.createTextNode(" "));
 
-    temp2 = document.createTextNode(" ");
-    temp.appendChild(temp2);
+    temp.appendChild(makeEl("button", {type:"button", innerHTML:"↑"}));
 
-    temp2 = document.createElement("button");
-    temp2.type = "button";
-    temp2.innerHTML = "↓";
-    temp.appendChild(temp2);
+    temp.appendChild(document.createTextNode(" "););
+
+    temp.appendChild(makeEl("button", {type:"button", innerHTML:"↓"}););
     el.appendChild(temp);
 
-    temp = document.createElement("textarea");
-    temp.rows = "5";
-    temp.cols = "35";
+    temp = makeEl("textarea", {rows:"5", cols:"35"});
+
     el.appendChild(temp);
 
     temp = document.getElementById("2e");
@@ -356,91 +292,58 @@
   document.getElementById("3a").addEventListener("click", () => {
     const el = document.createElement("div");
 
-    let temp = document.createElement("div");
-    temp.className = "d-none";
+    let temp = makeEl("div", {className:"d-none"});
 
-    let temp2 = document.createElement("button");
-    temp2.type = "button";
     const mrzim = lokacije_id;
-    temp2.addEventListener("click", () => {
+    
+    temp.appendChild(makeEl("button", {type:"button"}).addEventListener("click", () => {
       const el = document.getElementById(4 + mrzim + "d");
 
       if (el.classList.contains("d-none"))
         el.classList.remove("d-none");
       else
         el.classList.add("d-none");
-    });
-    temp.appendChild(temp2);
+    }));
 
-    temp2 = document.createTextNode(" ");
-    temp.appendChild(temp2);
+    temp.appendChild(document.createTextNode(" "););
 
-    temp2 = document.createElement("button");
-    temp2.type = "button";
-    temp2.innerHTML = "e";
-    temp2.addEventListener("click", () => {
-      temp.classList.add("d-none");
-      temp.nextElementSibling.classList.remove("d-none");
-    });
-    temp.appendChild(temp2);
+    temp.appendChild(makeEl("button", {type:"button", innerHTML:"e"}, () => {
+       temp.classList.add("d-none");
+       temp.nextElementSibling.classList.remove("d-none");
+     }));
 
-    temp2 = document.createTextNode(" ");
-    temp.appendChild(temp2);
+    temp.appendChild(document.createTextNode(" "););
 
-    temp2 = document.createElement("button");
-    temp2.type = "button";
-    temp2.innerHTML = "-";
-    temp2.addEventListener("click", () => {
-      el.parentNode.removeChild(el);
-      lokacije_id--;
-    });
-    temp.appendChild(temp2);
+    temp.appendChild(makeEl("button", {type:"button", innerHTML:"-"}, () => {
+       el.parentNode.removeChild(el);
+       lokacije_id--;
+     }));
     el.appendChild(temp);
 
     temp = document.createElement("div");
-    temp2 = document.createElement("input");
-    temp2.size = "29";
-    temp2.maxlength = "35";
-    temp.appendChild(temp2);
 
-    temp2 = document.createTextNode(" ");
-    temp.appendChild(temp2);
+    temp.appendChild(makeEl("input", {size:"29", maxLength:"35"}));
 
-    temp2 = document.createElement("button");
-    temp2.type = "button";
-    temp2.innerHTML = "✓";
-    temp2.addEventListener("click", () => {
-      const el2 = el.firstElementChild;
-      el2.firstElementChild.innerHTML = el2.nextElementSibling.firstElementChild.value;
-      el2.parentElement.children[2].name = el2.firstElementChild.innerHTML;
-      el2.classList.remove("d-none");
-      el2.nextElementSibling.classList.add("d-none");
-    });
-    temp.appendChild(temp2);
+    temp.appendChild(document.createTextNode(" "));
 
-    temp2 = document.createTextNode(" ");
-    temp.appendChild(temp2);
+    temp.appendChild(makeEl("button", {type:"button", innerHTML:"✓"}, () => {
+       const el2 = el.firstElementChild;
+       el2.firstElementChild.innerHTML = el2.nextElementSibling.firstElementChild.value;
+       el2.parentElement.children[2].name = el2.firstElementChild.innerHTML;
+       el2.classList.remove("d-none");
+       el2.nextElementSibling.classList.add("d-none");
+     }));
 
-    temp2 = document.createElement("button");
-    temp2.type = "button";
-    temp2.innerHTML = "↑";
-    temp.appendChild(temp2);
+    temp.appendChild(document.createTextNode(" "));
 
-    temp2 = document.createTextNode(" ");
-    temp.appendChild(temp2);
+    temp.appendChild(makeEl("button", {type:"button", innerHTML:"↑"}););
 
-    temp2 = document.createElement("button");
-    temp2.type = "button";
-    temp2.innerHTML = "↓";
-    temp.appendChild(temp2);
+    temp.appendChild(document.createTextNode(" "));
+
+    temp.appendChild(makeEl("button", {type:"button", innerHTML:"↓"}));
     el.appendChild(temp);
 
-    temp = document.createElement("textarea");
-    temp.className = "d-none";
-    temp.id = 4 + lokacije_id + "d";
-    temp.rows = "5";
-    temp.cols = "35";
-    el.appendChild(temp);
+    el.appendChild(makeEl("textarea", {className:"d-none", id: 4 + lokacije_id + "id", rows:"5", cols:"35"}));
 
     temp = document.getElementById("3e");
     temp.appendChild(el);

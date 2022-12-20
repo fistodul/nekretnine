@@ -1,6 +1,7 @@
 <%- include ('b'); %>
 <%- include ('form'); %>
 </header>
+<script src="/js/makeElementsFunction.min.js"></script>
 <script>
   // @license magnet:?xt=urn:btih:b8999bbaf509c08d127678643c515b9ab0836bae&dn=ISC.txt ISC
   function insertAfter(newnode, existingnode) {
@@ -17,35 +18,31 @@
       insertAfter(el, document.getElementsByName("u_id" + u_id)[0]);
 
     u_id++;
-    el = document.createElement("button");
-    el.type = "button";
-    el.innerHTML = "-";
-    el.addEventListener("click", () => {
-      el.previousElementSibling.parentNode.removeChild(el.previousElementSibling);
-      el.parentNode.removeChild(el);
+
+    el = makeEl("button", {type:"button", innerHTML:"-"}, () => {
+       el.previousElementSibling.parentNode.removeChild(el.previousElementSibling);
+       el.parentNode.removeChild(el);
       u_id--;
-    });
+     });
+
     insertAfter(el, document.getElementsByName("u_id" + u_id)[0]);
   }
 
   let file_id = 0;
   function addFile() {
     const el = document.getElementById("top").previousElementSibling.previousElementSibling;
-    let temp = document.createElement("input");
-    temp.name = "slika" + file_id++;
-    temp.type = "file"
-    temp.accept = ".jpg,.jpeg,.png,.gif,.webp";
+
+    let temp = makeEl("input", {name:"slika" + file_id++, type:"file", accept:".jpg,.jpeg,.png,.gif,.webp"});
+
     el.parentNode.insertBefore(temp, el);
 
-    temp = document.createElement("button");
-    temp.type = "button";
-    temp.innerHTML = "-";
-    temp.addEventListener("click", () => {
-      temp.previousElementSibling.parentNode.removeChild(temp.previousElementSibling);
-      temp.nextElementSibling.parentNode.removeChild(temp.nextElementSibling);
-      temp.parentNode.removeChild(temp);
-      file_id--;
-    });
+    temp = makeEl("button", {type:"button", innerHTML:"-"}, () => {
+       temp.previousElementSibling.parentNode.removeChild(temp.previousElementSibling);
+       temp.nextElementSibling.parentNode.removeChild(temp.nextElementSibling);
+       temp.parentNode.removeChild(temp);
+       file_id--;
+     });
+
     el.parentNode.insertBefore(temp, el);
 
     insertAfter(document.createElement("br"), temp);
@@ -54,31 +51,22 @@
   let p_id = 0;
   function addPair() {
     let el = document.getElementsByName("izdavanje")[0].parentElement.previousElementSibling.previousElementSibling;
-    let temp = document.createElement("input");
-    temp.name = "karakteristika" + p_id;
-    temp.type = "text";
-    temp.maxlength = "25";
-    temp.placeholder = "Karakteristika";
+
+    let temp = makeEl("input", {name:"karakteristika" + p_id, type:"text", maxLength:"25", placeholder:"Karakteristika"});
+
     el.parentNode.insertBefore(temp, el);
-    
-    el = document.createElement("input");
-    el.name = "vrednost" + p_id;
-    el.type = "text";
-    el.maxlength = "25";
-    el.placeholder = "Vrednost";
-    insertAfter(el, temp);
+
+    insertAfter(makeEl("input", {name:"vrednost" + p_id, type:"text", maxLength:"25", placeholder:"Vrednost"}), temp);
     insertAfter(document.createElement("br"), el);
 
-    temp = document.createElement("button");
-    temp.type = "button";
-    temp.innerHTML = "-";
-    temp.addEventListener("click", () => {
-      temp.previousElementSibling.parentNode.removeChild(temp.previousElementSibling);
-      temp.previousElementSibling.parentNode.removeChild(temp.previousElementSibling);
-      temp.nextElementSibling.parentNode.removeChild(temp.nextElementSibling);
-      temp.parentNode.removeChild(temp);
-      p_id--;
-    });
+    temp = makeEl("button", {type:"button", innerHTML:"-"}, () => {
+       temp.previousElementSibling.parentNode.removeChild(temp.previousElementSibling);
+       temp.previousElementSibling.parentNode.removeChild(temp.previousElementSibling);
+       temp.nextElementSibling.parentNode.removeChild(temp.nextElementSibling);
+       temp.parentNode.removeChild(temp);
+       p_id--;
+     });
+
     insertAfter(temp, el);
 
     el.parentNode.insertBefore(document.createTextNode(" "), el);
@@ -91,10 +79,7 @@
   el.enctype = "multipart/form-data";
   el.style = "color: RoyalBlue";
 
-  el = document.createElement("button");
-  el.type = "button";
-  el.innerHTML = "+";
-  el.addEventListener("click", addStreet);
+  el = makeEl("button", {type:"button", innerHTML:"+"}, addStreet);
 
   insertAfter(el, document.getElementsByName("u_id0")[0].nextElementSibling);
   insertAfter(document.createElement("br"), el);
@@ -106,42 +91,30 @@
   
   insertAfter(document.createTextNode(" "), document.getElementsByName("cena")[0]);
 
-  el = document.createElement("button");
-  el.type = "button";
-  el.innerHTML = "+";
-  el.addEventListener("click", addFile);
+  el = makeEl("button", {type:"button", innerHTML:"+"}, addFile);
+
   insertAfter(el, document.getElementsByName("broj_soba")[0].nextElementSibling);
   insertAfter(document.createElement("br"), el);
 
   el.parentNode.insertBefore(document.createTextNode("Slike:"), el);
   el.parentNode.insertBefore(document.createElement("br"), el);
 
-  let temp = document.createElement("input");
-  temp.name = "top";
-  temp.id = "top";
-  temp.type = "checkbox";
-  temp.value = "1";
-  insertAfter(temp, el);
+  let temp = makeEl("input", {name:"top", id:"top", type:"checkbox", value:"1"});
 
-  temp = document.createElement("label");
-  temp.htmlFor = "top";
-  temp.innerHTML = "Top";
+  insertAfter(temp, el);
+  
+  temp = makeEl("label", {htmlFor:"top", innerHTML:"Top"});
+
   insertAfter(temp, el.nextElementSibling);
 
   insertAfter(document.createElement("br"), el);
-  
-  el = document.createElement("textarea");
-  el.name = "opis";
-  el.id = "poruka";
-  el.rows = "5";
-  el.maxlength = "500";
-  el.placeholder = "opis";
+
+  el = makeEl("textarea", {name:"opis", id:"poruka", rows:"5", maxlength:"500", placeholder:"opis"});
+
   insertAfter(el, temp);
 
-  temp = document.createElement("button");
-  temp.type = "button";
-  temp.innerHTML = "+";
-  temp.addEventListener("click", addPair);
+  temp = makeEl("button", {type:"button", innerHTML:"+"}, addPair);
+
   insertAfter(temp, el);
 
   temp.parentNode.insertBefore(document.createElement("br"), temp);
@@ -155,12 +128,8 @@
 
   insertAfter(document.createTextNode(" "), document.getElementsByName("broj_soba")[0]);
 
-  el = document.createElement("input");
-  el.name = "lokacija";
-  el.className = "search-2nd-row";
-  el.type = "text";
-  el.maxlength = "80";
-  el.placeholder = "Link";
+  el = makeEl("input", {name:"lokacija", className:"search-2nd-row", type:"text", maxlength:"80", placeholder:"Link"});
+
   insertAfter(el, document.getElementsByName("spratnost")[0]);
 
   el.parentNode.insertBefore(document.createTextNode(" "), el);
@@ -180,19 +149,17 @@
       }
     }
 
-    el = document.createElement("input");
-    el.name = "id";
-    el.type = "hidden";
-    el.value = urlParams.get("id");
+    el = makeEl("input", {name:"id", type:"hidden", value:urlParams.get("id")});
+
     document.forms[0].appendChild(el);
     el = "Promeni oglas";
+
     <% if (locals.ponuda) {
       for (let i = 0; i < ponuda.slike.length; i++) { -%>
         addFile();
       <% }
     } -%>
-  } else
-    el = "Dodaj oglas";
+  } else el = "Dodaj oglas";
 
   document.getElementsByName("n_id")[0].options[0].text = "Šta dodajete?";
   document.getElementsByName("u_id0")[0].options[0].text = "Gde dodajete?";
