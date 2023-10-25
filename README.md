@@ -15,6 +15,7 @@ TODO:
 - [ ] Refactor backend code to make better use of async / await
 - [ ] Make sure the English translation is complete (including switching database to English)
 - [ ] Improve and refactor form search options to better categorize real estate objects from multiple areas
+- [ ] Finish separating main pages and admin CSS
 # Installation instructions
 These instructions will assume that the installation is done on a linux local environment and that the commands are run inside the root folder of the project but it can easily be modified to installing on windows machines or an online hosting platform as a version of this app is already live
 ## Install nodejs and the dependencies for the app
