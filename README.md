@@ -2,10 +2,13 @@
 Real estate listing site, the main features are search and results pages that query a MariaDB database in the backend and show each row result on the frontend using ejs, a html templating engine. Each real estate object has it's own page from which they can be ordered.
 
 The search page, showing only the available type of real estate object
+
 ![image](https://user-images.githubusercontent.com/4060824/157556757-fdd17e59-82a2-4f39-be58-9d6043e820a9.png)
 results page
+
 ![image](https://user-images.githubusercontent.com/4060824/157556804-d2cd9006-959b-4126-9f0c-6764873205b7.png)
 There is an admin part where real estate objects can be configured alongside the locations and types of real estate objects
+
 ![image](https://user-images.githubusercontent.com/4060824/157557394-7bcf3f88-1d54-40cb-b400-35842970add9.png)
 
 TODO:
