@@ -275,9 +275,9 @@
 
     temp.appendChild(makeEl("button", {type:"button", innerHTML:"↑"}));
 
-    temp.appendChild(document.createTextNode(" "););
+    temp.appendChild(document.createTextNode(" "));
 
-    temp.appendChild(makeEl("button", {type:"button", innerHTML:"↓"}););
+    temp.appendChild(makeEl("button", {type:"button", innerHTML:"↓"}));
     el.appendChild(temp);
 
     temp = makeEl("textarea", {rows:"5", cols:"35"});
@@ -305,14 +305,14 @@
         el.classList.add("d-none");
     }));
 
-    temp.appendChild(document.createTextNode(" "););
+    temp.appendChild(document.createTextNode(" "));
 
     temp.appendChild(makeEl("button", {type:"button", innerHTML:"e"}, () => {
        temp.classList.add("d-none");
        temp.nextElementSibling.classList.remove("d-none");
      }));
 
-    temp.appendChild(document.createTextNode(" "););
+    temp.appendChild(document.createTextNode(" "));
 
     temp.appendChild(makeEl("button", {type:"button", innerHTML:"-"}, () => {
        el.parentNode.removeChild(el);
@@ -336,7 +336,7 @@
 
     temp.appendChild(document.createTextNode(" "));
 
-    temp.appendChild(makeEl("button", {type:"button", innerHTML:"↑"}););
+    temp.appendChild(makeEl("button", {type:"button", innerHTML:"↑"}));
 
     temp.appendChild(document.createTextNode(" "));
 
