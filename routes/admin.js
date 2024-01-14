@@ -2,8 +2,6 @@ const router = require("express").Router(),
   common = require("./common"),
   bcrypt = require("bcryptjs");
 
-const pool = require("mariadb").createPool(common.dbOptions);
-
 async function admindata(conn, id) {
   let data = await common.indexdata(conn, 0);
   data.reklame = await conn.query("SELECT slika, poruka, link FROM reklame");
@@ -57,7 +55,7 @@ router.get("/", async (req, res) => {
   let conn;
 
   try {
-    conn = await pool.getConnection();
+    conn = await common.pool.getConnection();
 
     let data = await admindata(conn, req.query.search);
     if (data.ponude) {
@@ -82,7 +80,7 @@ router.route("/dodajstan")
     let conn;
 
     try {
-      conn = await pool.getConnection();
+      conn = await common.pool.getConnection();
 
       let data = await common.indexdata(conn, 0);
       if (req.query.id) data.ponuda = (await common.estatedata(await conn.query("SELECT * FROM prostori WHERE id = ?", req.query.id), conn))[0];
@@ -98,7 +96,7 @@ router.route("/dodajstan")
     let conn;
 
     try {
-      conn = await pool.getConnection();
+      conn = await common.pool.getConnection();
       await conn.query("START TRANSACTION");
 
       let id;
@@ -188,7 +186,7 @@ router.post("/deleteestate/:id", async (req, res) => {
   let conn;
 
   try {
-    conn = await pool.getConnection();
+    conn = await common.pool.getConnection();
 
     await conn.query("DELETE FROM prostori WHERE id = ?", req.params.id);
   } catch (err) {
@@ -202,7 +200,7 @@ router.post("/deletemessage/:id", async (req, res) => {
   let conn;
 
   try {
-    conn = await pool.getConnection();
+    conn = await common.pool.getConnection();
 
     await conn.query("DELETE FROM poruke WHERE id = ?", req.params.id);
   } catch (err) {
@@ -216,7 +214,7 @@ router.post("/replace_reklame", async (req, res) => {
   let conn;
 
   try {
-    conn = await pool.getConnection();
+    conn = await common.pool.getConnection();
     await conn.query("START TRANSACTION");
 
     let data = [];
@@ -263,7 +261,7 @@ router.post("/replace/:table", async (req, res) => {
   let conn;
 
   try {
-    conn = await pool.getConnection();
+    conn = await common.pool.getConnection();
     await conn.query("START TRANSACTION");
 
     let t = "lokacije";

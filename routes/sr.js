@@ -1,8 +1,6 @@
 const router = require("express").Router(),
   common = require("./common");
 
-const pool = require("mariadb").createPool(common.dbOptions);
-
 async function topdata(ponude, conn) {
   for (let i = 0; i < ponude.length; i++) {
     ponude[i].u_id = (await conn.query("SELECT u_id FROM prostorulice WHERE p_id = " + ponude[i].id + " LIMIT 1"))[0].u_id;
@@ -22,7 +20,7 @@ router.get("/", async (req, res) => {
   let conn;
 
   try {
-    conn = await pool.getConnection();
+    conn = await common.pool.getConnection();
 
     let data = await common.indexdata(conn);
     data.ponude = await topdata(await conn.query("SELECT id FROM top_ponude"), conn);
@@ -45,7 +43,7 @@ router.get("/pretraga", async (req, res) => {
   }
 
   try {
-    conn = await pool.getConnection();
+    conn = await common.pool.getConnection();
 
     let sql = `
     FROM prostori
@@ -84,7 +82,7 @@ router.get("/all", async (req, res) => {
   let conn;
 
   try {
-    conn = await pool.getConnection();
+    conn = await common.pool.getConnection();
 
     let data = await common.indexdata(conn);
     let sql = "SELECT * FROM top_ponude LIMIT 9";
@@ -109,7 +107,7 @@ router.get("/filter", async (req, res) => {
   let conn;
 
   try {
-    conn = await pool.getConnection();
+    conn = await common.pool.getConnection();
 
     const temp = req.query.u_id.split(" ");
     let sql = "";
@@ -155,7 +153,7 @@ router.route("/oglas/:id")
     let conn;
 
     try {
-      conn = await pool.getConnection();
+      conn = await common.pool.getConnection();
 
       let sql = `SELECT id, n_id, cena, stara_cena, kvadrati, broj_soba, spratnost, karakteristike, opis, currency, lokacija
       FROM prostori
@@ -181,7 +179,7 @@ router.route("/oglas/:id")
     let conn;
 
     try {
-      conn = await pool.getConnection();
+      conn = await common.pool.getConnection();
 
       await conn.query("INSERT INTO poruke (p_id, poruka) VALUES (?, ?)", [req.params.id, req.body.poruka]);
     } catch (err) {

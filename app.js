@@ -4,9 +4,10 @@ const createError = require("http-errors"),
   path = require("path"),
   cookieParser = require("cookie-parser"),
   compression = require("compression"),
-  fileUpload = require('express-fileupload'),
-  srRouter = require("./routes/sr"),
-  adminRouter = require("./routes/admin");
+  fileUpload = require("express-fileupload"),
+  srRouter = require(path.join(__dirname, "routes", "sr")),
+  adminRouter = require(path.join(__dirname, "routes", "admin")),
+  port = 3000;
 
 const app = express();
 
@@ -17,7 +18,7 @@ app.locals.rmWhitespace = true;
 
 if (app.get("logging") === "1") {
   const rfs = require("rotating-file-stream"),
-    logger = require("morgan");
+  logger = require("morgan");
 
   // create a rotating write stream
   const accessLogStream = rfs.createStream("access.log", {
@@ -55,13 +56,14 @@ app.use((req, res, next) => {
 // error handler
 app.use((err, req, res, next) => {
   // set locals, only providing error in development
-  res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.render("error", {message: err.message});
 });
 
 module.exports = app;
-app.listen(3000);
+app.listen(port);
+
+console.log(`Server is running on localhost:${port}`);
