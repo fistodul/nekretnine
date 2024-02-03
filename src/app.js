@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({ path: "../.env" });
 const createError = require("http-errors"),
   express = require("express"),
   path = require("path"),
@@ -6,8 +6,7 @@ const createError = require("http-errors"),
   compression = require("compression"),
   fileUpload = require("express-fileupload"),
   srRouter = require(path.join(__dirname, "routes", "sr")),
-  adminRouter = require(path.join(__dirname, "routes", "admin")),
-  port = 3000;
+  adminRouter = require(path.join(__dirname, "routes", "admin"));
 
 const app = express();
 
@@ -31,9 +30,7 @@ if (app.get("logging") === "1") {
   app.use(logger("common", { stream: accessLogStream }));
 }
 
-app.use(fileUpload({
-  createParentPath: true
-}));
+app.use(fileUpload({ createParentPath: true }));
 //app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser(process.env.Cookie_secret));
@@ -64,6 +61,6 @@ app.use((err, req, res, next) => {
 });
 
 module.exports = app;
-app.listen(port);
+app.listen(process.env.Site_Port);
 
-console.log(`Server is running on localhost:${port}`);
+console.log(`Server is running on localhost:${process.env.Site_Port}`);

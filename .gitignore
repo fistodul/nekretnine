@@ -1,4 +1,4 @@
 .env
 node_modules
 log
-public/images/oglasi
+src/public/images/oglasi

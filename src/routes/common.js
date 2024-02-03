@@ -64,6 +64,7 @@ const pool = require("mariadb").createPool({
   user: process.env.DB_User,
   password: process.env.DB_Pass,
   database: process.env.DB_Db,
+  port: process.env.Db_port,
   useSSL: false,
   allowPublicKeyRetrieval: true
 });
