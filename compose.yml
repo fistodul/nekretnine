@@ -10,8 +10,6 @@ services:
   db:
     image: mariadb
     restart: unless-stopped
-    #ports:
-    #  - ${Db_Port_external}:3306
     environment:
       MARIADB_USER: ${DB_User}
       MARIADB_PASSWORD: ${DB_Pass}
