@@ -4,9 +4,9 @@ WORKDIR /home/node/app
 
 ENV NODE_ENV=production
 
-COPY package.json package-lock.json .env ./
-
 COPY src ./src
+
+COPY package.json package-lock.json .env ./
 
 RUN npm install
 
