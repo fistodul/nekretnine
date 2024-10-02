@@ -1,14 +1,14 @@
-FROM node:20
+FROM node:22-alpine
 
 WORKDIR /home/node/app
 
 ENV NODE_ENV=production
 
-COPY src ./src
-
 COPY package.json package-lock.json .env ./
 
-RUN npm install
+RUN npm ci --omit=dev
+
+COPY src ./src
 
 EXPOSE ${port}
 
