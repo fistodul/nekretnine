@@ -1,6 +1,6 @@
 # Nekretnine
 
-Real estate listing site, the main features are search and results pages that query a MariaDB database in the backend and show each row result on the frontend using ejs, a html templating engine. Each real estate object has it's own page from which they can be ordered.
+Real estate listing site, the main features are search and results pages that query a MariaDB database in the backend and show each row result on the frontend using ejs, a html templating engine. Each real estate object has it's own page from which they can be ordered. The project uses the Express web framework for routing
 
 The search page, showing only the available type of real estate object
 
