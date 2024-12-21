@@ -1,4 +1,5 @@
-FROM node:22-alpine
+ARG NODE_VER=22
+FROM node:${NODE_VER}-alpine as base
 
 WORKDIR /home/node/app
 
@@ -10,7 +11,13 @@ RUN npm ci --omit=dev
 
 COPY src ./src
 
-EXPOSE ${port}
+FROM node:${NODE_VER}-alpine
+
+WORKDIR /home/node/app
+
+COPY --from=base /home/node/app .
+
+EXPOSE ${Site_Port}
 
 USER node
 
