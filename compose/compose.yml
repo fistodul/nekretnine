@@ -1,20 +1,22 @@
 services:
   web:
-    build: .
+    build: ..
     restart: unless-stopped
     depends_on:
       db:
         condition: service_healthy
     ports:
-      - ${Site_Port}:${Site_Port}
+      - ${WEB_PORT}:${WEB_PORT}
   db:
     image: mariadb
     restart: unless-stopped
     environment:
-      MARIADB_USER: ${DB_User}
-      MARIADB_PASSWORD: ${DB_Pass}
-      MARIADB_DATABASE: ${DB_Db}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASS}
+      MARIADB_DATABASE: ${DB_DB}
       MARIADB_RANDOM_ROOT_PASSWORD: 1
+    #ports:
+    #  - 3306:3306
     healthcheck:
       interval: 15s
       retries: 3
@@ -29,4 +31,5 @@ services:
       timeout: 30s
     volumes:
       - ${PWD}/nekretnine.sql:/docker-entrypoint-initdb.d/a.sql
+      - ${PWD}/data.sql:/docker-entrypoint-initdb.d/b.sql
       #- /var/lib/mysql:/var/lib/mysql

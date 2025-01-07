@@ -25,7 +25,7 @@ async function admindata(conn, id) {
   return data;
 }
 
-const hash = bcrypt.hashSync(process.env.Site_Pass);
+const hash = bcrypt.hashSync(process.env.WEB_PASS);
 
 router.use((req, res, next) => {
   res.locals.robots = "noindex";

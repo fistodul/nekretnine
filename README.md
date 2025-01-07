@@ -25,31 +25,39 @@ TODO:
 
 ## Modify the .env file for the environment in use
 
-This project uses the dotenv middleware to add key/value pairs from files into the project as process.env environment variables, the variables in use are:
+This project uses the dotenv middleware to add key/value pairs from the .env file into the project as environment variables, the default values are:
 ```
-DB_Host = "localhost"
+DB_HOST = "db"
 ```
 Should be set to the address of the database
 ```
-DB_User = "root"
+DB_USER = "testuser123"
 ```
 Should be set to the user who has control over the database
 ```
-DB_Pass = ""
+DB_PASS = "testpass123"
 ```
 The password of the user who has control over the database
 ```
-DB_Db = "nekretnine"
+DB_DB = "nekretnine"
 ```
 The name of the database itself
 ```
-Cookie_secret = "testcookie123"
+DB_PORT = "3306"
+```
+The port of the database
+```
+COOKIE_SECRET = "testcookie123"
 ```
 Should be a random string, for cookie authentificaiton
 ```
-Site_Pass = "testpass123"
+WEB_PASS = "testpass123"
 ```
-The password to the admin part of the site, should be strong (Minimum of 8 characters consiting of at least 1 uppercase and lowercase letter, 1 number and 1 special character)
+The password to the admin part of the site, should be strong (minimum 8 characters consiting of at least 1 uppercase and lowercase letter, 1 number and 1 special character)
+```
+WEB_PORT = "8000"
+```
+The port the website will listen on
 
 ## Install the app
 
@@ -59,7 +67,7 @@ At this point you have the option to use Docker or to manually install the app
 
   Docker can be found on the official site: https://www.docker.com
   
-  Running `docker compose up` will build the Dockerfile in the current directory and start 2 containers, the nodejs site and a MariaDB database
+  Running `docker compose --env-file ../.env up` will build the Dockerfile in the root directory and start 2 containers, the nodejs site and a MariaDB database, populated with some sample data
   
   Alternatively, if you configured the .env file with another database you can skip using docker compose and run just the nodejs container like this:
   ```

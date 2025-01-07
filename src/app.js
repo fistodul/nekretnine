@@ -33,7 +33,7 @@ if (app.get("logging") === "1") {
 app.use(fileUpload({ createParentPath: true }));
 //app.use(express.json());
 app.use(express.urlencoded({extended: false}));
-app.use(cookieParser(process.env.Cookie_secret));
+app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(compression({level:1}));
 app.use(express.static(path.join(__dirname, "public")));
 app.use((req, res, next) => {
@@ -61,6 +61,5 @@ app.use((err, req, res, next) => {
 });
 
 module.exports = app;
-app.listen(process.env.Site_Port);
-
-console.log(`Server is running on localhost:${process.env.Site_Port}`);
+app.listen(process.env.WEB_PORT);
+console.log(`Server is running on localhost:${process.env.WEB_PORT}`);

@@ -1,9 +1,7 @@
 ARG NODE_VER=22
-FROM node:${NODE_VER}-alpine as base
+FROM node:${NODE_VER}-alpine AS base
 
 WORKDIR /home/node/app
-
-ENV NODE_ENV=production
 
 COPY package.json package-lock.json .env ./
 
@@ -15,9 +13,11 @@ FROM node:${NODE_VER}-alpine
 
 WORKDIR /home/node/app
 
+ENV NODE_ENV=production
+
 COPY --from=base /home/node/app .
 
-EXPOSE ${Site_Port}
+EXPOSE ${WEB_PORT}
 
 USER node
 

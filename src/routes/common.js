@@ -60,11 +60,11 @@ async function indexdata(conn, limited = 1) {
 }
 
 const pool = require("mariadb").createPool({
-  host: process.env.DB_Host,
-  user: process.env.DB_User,
-  password: process.env.DB_Pass,
-  database: process.env.DB_Db,
-  port: process.env.Db_port,
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_DB,
+  port: process.env.DB_PORT,
   useSSL: false,
   allowPublicKeyRetrieval: true
 });
