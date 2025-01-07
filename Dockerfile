@@ -13,8 +13,6 @@ FROM node:${NODE_VER}-alpine
 
 WORKDIR /home/node/app
 
-ENV NODE_ENV=production
-
 COPY --from=base /home/node/app .
 
 EXPOSE ${WEB_PORT}

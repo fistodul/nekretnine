@@ -25,39 +25,65 @@ TODO:
 
 ## Modify the .env file for the environment in use
 
-This project uses the dotenv middleware to add key/value pairs from the .env file into the project as environment variables, the default values are:
-```
-DB_HOST = "db"
-```
-Should be set to the address of the database
-```
-DB_USER = "testuser123"
-```
-Should be set to the user who has control over the database
-```
-DB_PASS = "testpass123"
-```
-The password of the user who has control over the database
-```
-DB_DB = "nekretnine"
-```
-The name of the database itself
-```
-DB_PORT = "3306"
-```
-The port of the database
-```
-COOKIE_SECRET = "testcookie123"
-```
-Should be a random string, for cookie authentificaiton
-```
-WEB_PASS = "testpass123"
-```
-The password to the admin part of the site, should be strong (minimum 8 characters consiting of at least 1 uppercase and lowercase letter, 1 number and 1 special character)
-```
-WEB_PORT = "8000"
-```
-The port the website will listen on
+This project uses the dotenv middleware to add key/value pairs from the .env file into the project as environment variables, the default values are
+
+<details>
+  <summary>Environment variables</summary>
+
+  ```
+  NODE_ENV = "production"
+  ```
+
+  Default production value, you may change it to development for debugging
+
+  ```
+  DB_HOST = "db"
+  ```
+
+  Should be set to the address of the database
+
+  ```
+  DB_USER = "testuser123"
+  ```
+
+  Should be set to the user who has control over the database
+
+  ```
+  DB_PASS = "testpass123"
+  ```
+
+  The password of the user who has control over the database
+
+  ```
+  DB_DB = "nekretnine"
+  ```
+
+  The name of the database itself
+
+  ```
+  DB_PORT = "3306"
+  ```
+
+  The port of the database
+
+  ```
+  COOKIE_SECRET = "testcookie123"
+  ```
+
+  Should be a random string, for cookie authentificaiton
+
+  ```
+  WEB_PASS = "testpass123"
+  ```
+
+  The password to the admin part of the site, should be strong (minimum 8 characters consiting of at least 1 uppercase and lowercase letter, 1 number and 1 special character)
+
+  ```
+  WEB_PORT = "8000"
+  ```
+
+  The port the website will listen on
+</details>
 
 ## Install the app
 
@@ -70,6 +96,7 @@ At this point you have the option to use Docker or to manually install the app
   Running `docker compose --env-file ../.env up` will build the Dockerfile in the root directory and start 2 containers, the nodejs site and a MariaDB database, populated with some sample data
   
   Alternatively, if you configured the .env file with another database you can skip using docker compose and run just the nodejs container like this:
+
   ```
   docker build -t nekretnine:latest .
   docker run --name nekretnine -d --restart unless-stopped -p 8000:8000 nekretnine:latest
@@ -89,28 +116,37 @@ At this point you have the option to use Docker or to manually install the app
   ### Import the database
   
   The database in use by the project is MariaDB which is cross compatible with MySQL, first the database for app should be created:
+
   ```
   mysql -u root -p -e "CREATE DATABASE nekretnine"
   ```
+
   Then the schema should be imported into the created database
+
   ```
   mysql -u root -p nekretnine < nekretnine.sql
   ```
+
   There is dummy data available in the repository with locations for the Niš, Serbia area. It can be imported like this:
+
   ```
   mysql -u root -p nekretnine < data.sql
   ```
+
   All of these commands will prompt for the password of the root user
   
   ### Running the app
   
-  The app can be started with a shell script that will automatically start the app in production mode and restart it should it crash
+  The app can be started with a shell script that will automatically start the app and restart it should it crash
+
   ```
   cd src && sh app.sh
   ```
-  alternatively, the app.js file can be ran directly directly with the NODE_ENV=production environment variable
+
+  alternatively, the app.js file can be ran directly directly with npm
+
   ```
-  NODE_ENV=production npm start
+  npm start
   ```
 </details>
 
