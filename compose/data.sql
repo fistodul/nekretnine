@@ -1,12 +1,8 @@
-REPLACE INTO vrste
-(id, ime)
-VALUES
+REPLACE INTO vrste (id, ime) VALUES
 (1, 'Stambeni prostor'),
 (2, 'Poslovni prostor');
 
-REPLACE INTO nekretnine
-(id, v_id, ime)
-VALUES
+REPLACE INTO nekretnine (id, v_id, ime) VALUES
 (1, 1, 'Stan'),
 (2, 1, 'Soba'),
 (3, 1, 'Kuća'),
@@ -23,9 +19,7 @@ VALUES
 (14, 2, 'Stovarište'),
 (15, 2, 'Ostalo...');
 
-REPLACE INTO lokacije
-(id, ime)
-VALUES
+REPLACE INTO lokacije (id, ime) VALUES
 (1, 'Crveni Krst'),
 (2, 'Medijana'),
 (3, 'Niška Banja'),
@@ -33,9 +27,7 @@ VALUES
 (5, 'Pantelej'),
 (6, 'Ostali gradovi');
 
-REPLACE INTO ulice
-(id, l_id, ime)
-VALUES
+REPLACE INTO ulice (id, l_id, ime) VALUES
 (1, 1, 'Crveni Krst'),
 (2, 1, 'Aerodrom'),
 (3, 1, 'Autobuska stanica'),
