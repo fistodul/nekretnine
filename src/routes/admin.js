@@ -218,7 +218,7 @@ router.post("/replace_reklame", async (req, res) => {
     await conn.query("START TRANSACTION");
 
     let data = [];
-    let num = (await conn.query("SELECT IFNULL(MIN(id), 1) AS min FROM reklame"))[0].min;
+    let num = Number((await conn.query("SELECT IFNULL(MIN(id), 1) AS min FROM reklame"))[0].min);
     const l = num + Object.keys(req.body).length / 2;
     for (; num < l; num++) {
       let sql = "REPLACE INTO reklame (id, poruka";
