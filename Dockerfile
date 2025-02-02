@@ -9,6 +9,8 @@ RUN npm ci --omit=dev
 
 COPY src ./src
 
+RUN rm -f package.json package-lock.json src/app.sh
+
 FROM node:${NODE_VER}-alpine
 
 WORKDIR /home/node/app
