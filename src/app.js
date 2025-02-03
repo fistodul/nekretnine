@@ -31,7 +31,6 @@ if (app.get("logging") === "1") {
 }
 
 app.use(fileUpload({ createParentPath: true }));
-//app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(compression({level:1}));

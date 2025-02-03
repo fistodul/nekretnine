@@ -132,7 +132,7 @@ router.route("/dodajstan")
 
       sql = "REPLACE INTO slike (id, p_id, slika) VALUES ";
       sql2 = 0;
-      const max = (await conn.query("SELECT IFNULL(MAX(id), 1) AS max FROM slike"))[0].max + 1;
+      let max = (await conn.query("SELECT IFNULL(MAX(id), 1) AS max FROM slike"))[0].max + 1;
       let del = "0";
       data = [];
       let temp = await conn.query("SELECT id, slika FROM slike WHERE p_id = ?", id);
@@ -217,7 +217,6 @@ router.post("/replace_reklame", async (req, res) => {
     conn = await common.pool.getConnection();
     await conn.query("START TRANSACTION");
 
-    let data = [];
     let num = Number((await conn.query("SELECT IFNULL(MIN(id), 1) AS min FROM reklame"))[0].min);
     const l = num + Object.keys(req.body).length / 2;
     for (; num < l; num++) {

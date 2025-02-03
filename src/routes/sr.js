@@ -90,7 +90,7 @@ router.get("/all", async (req, res) => {
     const temp = Math.abs(req.query.page);
     if (temp && req.query.page && temp <= data.l) sql += " OFFSET " + 9 * (temp - 1);
 
-    data.ponude = await topdata(await conn.query(sql), conn, 0);
+    data.ponude = await topdata(await conn.query(sql), conn);
     data.top = 1;
 
     res.locals.title = "ARNO Nekretnine: Top Ponude";
