@@ -1,6 +1,6 @@
 # Nekretnine
 
-Real estate listing site, the main features are search and results pages that query a MariaDB database in the backend and show each row result on the frontend using ejs, a html templating engine. Each real estate object has it's own page from which they can be ordered. The project uses the Express web framework for routing
+Real estate listing site, the main features are search and results pages that query a MariaDB database in the backend and show each row result on the frontend using ejs, a html templating engine. Each real estate object has it's own page from which they can be ordered. The project uses the Express web framework for routing and cdk8 for infrastructure which was made with `cdk8s init typescript-app`
 
 The search page, showing only the available type of real estate object
 
@@ -88,8 +88,19 @@ This project uses the dotenv middleware to add key/value pairs from the .env fil
 ## Install the app
 
 At this point you have the option to use Docker or to manually install the app
+
 <details>
-  <summary>Docker instructions</summary>
+  <summary>CDK for Kubernetes</summary>
+
+  cdk8 can be installed with `npm install -g cdk8s-cli`
+  
+  Running `npm run build` will create a dist/nekretnine.k8s.yaml file which can be deployed with `kubectl apply -f dist/`
+
+  The deployed cluster will be similar to to the one created by Docker compose in the Docker instructions
+</details>
+
+<details>
+  <summary>Docker</summary>
 
   Docker can be found on the official site: https://www.docker.com
   
@@ -102,6 +113,7 @@ At this point you have the option to use Docker or to manually install the app
   docker run --name nekretnine -d --restart unless-stopped -p 8000:8000 nekretnine:latest
   ```
 </details>
+
 <details>
   <summary>Manual instructions</summary>
   
