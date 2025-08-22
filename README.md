@@ -87,13 +87,13 @@ This project uses the dotenv middleware to add key/value pairs from the .env fil
 
 ## Install the app
 
-At this point you have the option to use Docker or to manually install the app
+At this point you have the option to use containers or to manually install the app
 
 <details>
   <summary>CDK for Kubernetes</summary>
 
-  cdk8 can be installed with `npm install -g cdk8s-cli`
-  
+  cdk8 can be installed with `npm install -g cdk8s-cli typescript`
+
   Running `npm run build` will create a dist/nekretnine.k8s.yaml file which can be deployed with `kubectl apply -f dist/`
 
   The deployed cluster will be similar to to the one created by Docker compose in the Docker instructions
