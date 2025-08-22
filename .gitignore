@@ -4,5 +4,5 @@ log
 src/public/images/oglasi
 *.d.ts
 *.js
-!jest.config.js
+tsconfig.tsbuildinfo
 dist/
