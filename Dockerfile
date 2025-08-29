@@ -11,14 +11,15 @@ COPY src ./src
 
 RUN rm -f package.json package-lock.json src/app.sh
 
-FROM node:${NODE_VER}-alpine
 
-WORKDIR /home/node/app
+FROM gcr.io/distroless/nodejs${NODE_VER}
+
+WORKDIR /app
 
 COPY --from=base /home/node/app .
 
+WORKDIR /app/src
+
 EXPOSE ${WEB_PORT}
 
-USER node
-
-CMD ["npm", "start"]
+CMD ["app.js"]
