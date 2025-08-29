@@ -5,7 +5,7 @@ WORKDIR /home/node/app
 
 COPY package.json package-lock.json .env ./
 
-RUN npm ci --omit=dev
+RUN npm ci --omit=dev --ignore-scripts
 
 COPY src ./src
 
