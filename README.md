@@ -103,9 +103,9 @@ At this point you have the option to use containers or to manually install the a
   <summary>Docker</summary>
 
   Docker can be found on the official site: https://www.docker.com
-  
+
   Running `docker compose --env-file ../.env up` will build the Dockerfile in the root directory and start 2 containers, the nodejs site and a MariaDB database, populated with some sample data
-  
+
   Alternatively, if you configured the .env file with another database you can skip using docker compose and run just the nodejs container like this:
 
   ```
@@ -116,17 +116,17 @@ At this point you have the option to use containers or to manually install the a
 
 <details>
   <summary>Manual instructions</summary>
-  
+
   These commands should be run inside the root folder of the project, i'm assuming you'll be running them on Linux but they can easily be modified for Windows
-  
+
   ### Install nodejs and the dependencies for the app
-  
+
   Node.js can be found on the offical site: https://nodejs.org
-  
+
   With Node.js installed, running `npm install` will download and install all the needed dependencies
-  
+
   ### Import the database
-  
+
   The database in use by the project is MariaDB which is cross compatible with MySQL, first the database for app should be created:
 
   ```
@@ -146,9 +146,9 @@ At this point you have the option to use containers or to manually install the a
   ```
 
   All of these commands will prompt for the password of the root user
-  
+
   ### Running the app
-  
+
   The app can be started with a shell script that will automatically start the app and restart it should it crash
 
   ```
