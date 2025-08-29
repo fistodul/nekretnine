@@ -25,7 +25,7 @@ jobs:
 
       - name: Build and push Docker images
         run: |
-          IMAGE=filipmania/nekretnine
+          IMAGE=${{ secrets.DOCKER_USERNAME }}/nekretnine
 
           docker build -t ${IMAGE}:${GITHUB_RUN_ID} -t ${IMAGE}:latest .
           docker push ${IMAGE}:${GITHUB_RUN_ID}
