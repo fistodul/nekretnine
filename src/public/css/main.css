@@ -359,7 +359,7 @@ main h1 {
   padding: 2%;
   box-shadow: 0 4px 57px var(--trans-black);
   border-radius: 50px;
-  font-family: Times New Roman;
+  font-family: 'Times New Roman', serif;
   font-style: normal;
   text-align: center;
 }
@@ -407,7 +407,7 @@ main h1 {
 }
 
 .prices {
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   font-style: normal;
   color: #1CA49B;
   border: none;
@@ -430,7 +430,7 @@ main h1 {
 }
 
 #show-location {
-  font-family: Open Sans;
+  font-family: 'Open Sans', sans-serif;
   font-style: normal;
   font-size: 25px;
   line-height: 34px;
