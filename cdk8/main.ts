@@ -1,9 +1,9 @@
 import { Construct } from 'constructs';
 import { App, Chart, ChartProps } from 'cdk8s';
 
-import * as fs from 'fs';
+import * as fs from 'node:fs';
 import * as dotenv from 'dotenv';
-import * as path from 'path';
+import * as path from 'node:path';
 
 import {
   KubeDeployment,
