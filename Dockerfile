@@ -12,7 +12,7 @@ COPY src ./src
 RUN rm -f package.json package-lock.json src/app.sh
 
 
-FROM gcr.io/distroless/nodejs${NODE_VER}:latest
+FROM gcr.io/distroless/nodejs${NODE_VER}:latest-amd64
 
 WORKDIR /app
 
