@@ -21,9 +21,9 @@ TODO:
 - [ ] Improve and refactor form search options to better categorize real estate objects from multiple areas
 - [ ] Finish separating main pages and admin CSS
 
-# Installation instructions
+## Installation instructions
 
-## Modify the .env file for the environment in use
+### Modify the .env file for the environment in use
 
 This project uses the dotenv middleware to add key/value pairs from the .env file into the project as environment variables, the default values are
 
@@ -85,7 +85,7 @@ This project uses the dotenv middleware to add key/value pairs from the .env fil
   The port the website will listen on
 </details>
 
-## Install the app
+### Install the app
 
 At this point you have the option to use containers or to manually install the app
 
@@ -119,13 +119,13 @@ At this point you have the option to use containers or to manually install the a
 
   These commands should be run inside the root folder of the project, i'm assuming you'll be running them on Linux but they can easily be modified for Windows
 
-  ### Install nodejs and the dependencies for the app
+  #### Install nodejs and the dependencies for the app
 
   Node.js can be found on the offical site: https://nodejs.org
 
   With Node.js installed, running `npm install` will download and install all the needed dependencies
 
-  ### Import the database
+  #### Import the database
 
   The database in use by the project is MariaDB which is cross compatible with MySQL, first the database for app should be created:
 
@@ -147,7 +147,7 @@ At this point you have the option to use containers or to manually install the a
 
   All of these commands will prompt for the password of the root user
 
-  ### Running the app
+  #### Running the app
 
   The app can be started with a shell script that will automatically start the app and restart it should it crash
 
