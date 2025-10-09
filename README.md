@@ -30,56 +30,56 @@ This project uses the dotenv middleware to add key/value pairs from the .env fil
 <details>
   <summary>Environment variables</summary>
 
-  ```
-  NODE_ENV = "production"
+  ```bash
+  NODE_ENV="production"
   ```
 
   Default production value, you may change it to development for debugging
 
-  ```
-  DB_HOST = "db"
+  ```bash
+  DB_HOST="db"
   ```
 
   Should be set to the address of the database
 
-  ```
-  DB_USER = "testuser123"
+  ```bash
+  DB_USER="testuser123"
   ```
 
   Should be set to the user who has control over the database
 
-  ```
-  DB_PASS = "testpass123"
+  ```bash
+  DB_PASS="testpass123"
   ```
 
   The password of the user who has control over the database
 
-  ```
-  DB_DB = "nekretnine"
+  ```bash
+  DB_DB="nekretnine"
   ```
 
   The name of the database itself
 
-  ```
-  DB_PORT = "3306"
+  ```bash
+  DB_PORT="3306"
   ```
 
   The port of the database
 
-  ```
-  COOKIE_SECRET = "testcookie123"
+  ```bash
+  COOKIE_SECRET="testcookie123"
   ```
 
   Should be a random string, for cookie authentificaiton
 
-  ```
-  WEB_PASS = "testpass123"
+  ```bash
+  WEB_PASS="testpass123"
   ```
 
   The password to the admin part of the site, should be strong (minimum 8 characters consiting of at least 1 uppercase and lowercase letter, 1 number and 1 special character)
 
-  ```
-  WEB_PORT = "8000"
+  ```bash
+  WEB_PORT="8000"
   ```
 
   The port the website will listen on
@@ -108,7 +108,7 @@ At this point you have the option to use containers or to manually install the a
 
   Alternatively, if you configured the .env file with another database you can skip using docker compose and run just the nodejs container like this:
 
-  ```
+  ```bash
   docker build -t nekretnine:latest .
   docker run --name nekretnine -d --restart unless-stopped -p 8000:8000 nekretnine:latest
   ```
@@ -129,19 +129,19 @@ At this point you have the option to use containers or to manually install the a
 
   The database in use by the project is MariaDB which is cross compatible with MySQL, first the database for app should be created:
 
-  ```
+  ```bash
   mysql -u root -p -e "CREATE DATABASE nekretnine"
   ```
 
   Then the schema should be imported into the created database
 
-  ```
+  ```bash
   mysql -u root -p nekretnine < nekretnine.sql
   ```
 
   There is dummy data available in the repository with locations for the Niš, Serbia area. It can be imported like this:
 
-  ```
+  ```bash
   mysql -u root -p nekretnine < data.sql
   ```
 
@@ -151,13 +151,13 @@ At this point you have the option to use containers or to manually install the a
 
   The app can be started with a shell script that will automatically start the app and restart it should it crash
 
-  ```
+  ```bash
   cd src && sh app.sh
   ```
 
   alternatively, the app.js file can be ran directly directly with npm
 
-  ```
+  ```bash
   npm start
   ```
 </details>
