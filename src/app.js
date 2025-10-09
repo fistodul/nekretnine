@@ -15,7 +15,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.locals.rmWhitespace = true;
 
-if (app.get("logging") === "1") {
+if (app.get("LOGGING") === "1") {
   const rfs = require("rotating-file-stream"),
   logger = require("morgan");
 
