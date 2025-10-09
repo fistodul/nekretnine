@@ -166,6 +166,6 @@ At this point you have the option to use containers or to manually install the a
 
 After starting the app, the website can be visited on the following address: http://localhost:8000
 
-Logging using the morgan middleware can be achieved with setting the logging environment variable to 1 like `logging=1 node app.js`, the format of the logs can be configured, more info can be found here: https://github.com/expressjs/morgan#predefined-formats
+Logging using the morgan middleware can be achieved with setting the logging environment variable to 1 like `logging=1 node app.js`, the format of the logs can be configured, more info can be found [here](https://github.com/expressjs/morgan#predefined-formats)
 
-A log file rotator is also in use, the availble options are documented on the middleware page: https://www.npmjs.com/package/rotating-file-stream#options
+A log file rotator is also in use, the availble options are documented on the [middleware page](https://www.npmjs.com/package/rotating-file-stream#options)
